@@ -29,29 +29,40 @@ namespace BH.Adapter.CarbonQueryDatabase
         [Input("password", "Provide EC3 Password")]
         [Output("adapter", "adapter results")]
 
-        public CarbonQueryDatabaseAdapter(string username = "", string password = "")
+        public CarbonQueryDatabaseAdapter(string username = "", string password = "", bool active = false)
         {
-            System.Net.ServicePointManager.SecurityProtocol =
-                SecurityProtocolType.Ssl3 |
-                SecurityProtocolType.Tls12 |
-                SecurityProtocolType.Tls11 |
-                SecurityProtocolType.Tls;
+            if (active)
+            {
+                System.Net.ServicePointManager.SecurityProtocol =
+                  SecurityProtocolType.Ssl3 |
+                  SecurityProtocolType.Tls12 |
+                  SecurityProtocolType.Tls11 |
+                  SecurityProtocolType.Tls;
 
-            HttpClient client= new HttpClient();
+                HttpClient client = new HttpClient();
 
-            //Add headers per api auth requirements
-            client.DefaultRequestHeaders.Add("accept", "application/json");
+                //Add headers per api auth requirements
+                client.DefaultRequestHeaders.Add("accept", "application/json");
 
-            //Post login auth request and return token to m_bearerKey
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, m_apiAddress);
+                //Post login auth request and return token to m_bearerKey
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, m_apiAddress);
 
-            string loginString = "{\"username\":\""+username+"\",\"password\":\""+password+"\"}";
-            request.Content = new StringContent(loginString, Encoding.UTF8, "application/json");     
+                string loginString = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+                request.Content = new StringContent(loginString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = client.SendAsync(request).Result;
+                HttpResponseMessage response = client.SendAsync(request).Result;
 
-            string responseAuthString = response.Content.ReadAsStringAsync().Result;
-            responseAuth = responseAuthString;
+                string responseAuthString = response.Content.ReadAsStringAsync().Result;
+
+                m_bearerToken = "";
+
+                if (responseAuthString.Split('"').Length >= 3)
+                    m_bearerToken = responseAuthString.Split('"')[3];
+                else
+                {
+                    BH.Engine.Reflection.Compute.RecordError("The response was not a valid token. Please check credentials and try again.");
+                }
+            }
 
         }
 
@@ -60,7 +71,6 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
 
         private static string m_apiAddress = "https://etl-api.cqd.io/api/rest-auth/login";
-        private static string m_bearerToken = "";
-        public string responseAuth { get; set; } = "";
+        private static string m_bearerToken;
     }
 }
