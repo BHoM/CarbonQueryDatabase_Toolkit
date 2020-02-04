@@ -38,10 +38,12 @@ namespace BH.Engine.CarbonQueryDatabase
                 density = obj.PropertyValue("density")?.ToString() ?? "",
 
                 gwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                
             };
-                      
-            
+                                
             return data;
         }
+
+         /***************************************************/
     }
 }

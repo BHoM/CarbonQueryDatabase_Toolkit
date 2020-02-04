@@ -45,8 +45,8 @@ namespace BH.Engine.CarbonQueryDatabase
                 return responseAuthString.Split('"')[3];
             else
             {
-                BH.Engine.Reflection.Compute.RecordWarning("We did not receive the response we expected. Returned is the full response result for you to manually examine and extract a bearer key from");
-                return responseAuthString;
+                BH.Engine.Reflection.Compute.RecordWarning("We did not receive the response we expected. The response was '" + responseAuthString + "'");
+                return null;
             }
         }
     }
