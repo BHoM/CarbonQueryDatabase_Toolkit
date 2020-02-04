@@ -87,7 +87,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             List<EPDData> epdDataFromRequest = new List<EPDData>();
 
-            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs, "CustomData.Objects");
+            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
             {
