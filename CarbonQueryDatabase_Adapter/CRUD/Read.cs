@@ -27,13 +27,18 @@ using System.Linq;
 using BH.oM.Adapter;
 using BH.oM.Base;
 using BH.oM.HTTP;
+using BH.Engine.HTTP;
+using BH.Engine.CarbonQueryDatabase;
 using BH.oM.LifeCycleAnalysis;
+using BH.Engine.CarbonQueryDatabase;
 using BH.Adapter;
+using BH.Engine.Serialiser;
+using BH.Engine.Reflection;
 
 
 namespace BH.Adapter.CarbonQueryDatabase
 {
-    public partial class CarbonQueryDatabase : BHoMAdapter
+    public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
     {
         /***************************************************/
         /**** Adapter overload method                   ****/
@@ -42,7 +47,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         {
             dynamic elems = null;
             //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
-            if (type == typeof(EPDData))
+            if (type == typeof(BH.oM.Base.BHoMObject))
                 elems = ReadEPDData(ids as dynamic);
 
             return elems;
@@ -59,12 +64,41 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         private List<EPDData> ReadEPDData(List<string> ids = null)
         {
-            //create get Request
-            //Add BearerTokenHeader
-            //MakeRequest
-            //ConvertResponse
+            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("epds", m_bearerToken); //TODO Add parameters option per config
+            string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
+            List<object> responseObjs = null;
+            if (response == null)
+            {
+                BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
+                return null;
+            }
 
-            return null;
+            // check if the response is a valid json
+            else if (response.StartsWith("{") || response.StartsWith("["))
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+
+            else
+            {
+                BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
+                return null;
+            }
+
+            //Convert nested customObject from serialization to list of epdData objects
+
+            List<EPDData> epdDataFromRequest = new List<EPDData>();
+
+            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs, "CustomData.Objects");
+            IEnumerable objList = epdObjects as IEnumerable;
+            if (objList != null)
+            {
+                foreach (CustomObject co in objList)
+                {
+                    EPDData epdData = BH.Engine.CarbonQueryDatabase.Convert.ToBHoMObject(co);
+                    epdDataFromRequest.Add(epdData);
+                }
+            }
+
+            return epdDataFromRequest;
         }
 
             /***************************************************/
