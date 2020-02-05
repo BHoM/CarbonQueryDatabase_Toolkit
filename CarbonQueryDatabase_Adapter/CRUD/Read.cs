@@ -24,8 +24,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BH.oM.Adapter;
+using BH.Adapter.CarbonQueryDatabase;
 using BH.oM.Base;
+using BH.oM.Adapter;
+using BH.oM.Adapter.CarbonQueryDatabase;
 using BH.oM.HTTP;
 using BH.Engine.HTTP;
 using BH.Engine.CarbonQueryDatabase;
@@ -45,15 +47,24 @@ namespace BH.Adapter.CarbonQueryDatabase
         protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids, ActionConfig actionConfig = null)
         {
             dynamic elems = null;
-            //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
+
+            int count = 0;
+            string name = null;
+
+            CQDConfig config = actionConfig as CQDConfig;
+            if (config != null)
+            {
+                count = config.Count;
+                name = config.NameLike;
+            }
+
+            //Choose what to pull out depending on the type.
             if (type == typeof(BH.oM.Base.BHoMObject))
-                elems = ReadEPDData(ids as dynamic);
+                elems = ReadEPDData(ids as dynamic, count, name);
 
             return elems;
         }
 
-
-        /***************************************************/
 
         /***************************************************/
         /**** Private specific read methods             ****/
@@ -61,9 +72,23 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
 
-        private List<EPDData> ReadEPDData(List<string> ids = null)
+        private List<EPDData> ReadEPDData(List<string> ids = null, int count = 0, string name = null)
         {
-            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("epds", m_bearerToken); //TODO Add parameters option per config
+            //Add parameters per config
+            CustomObject requestParams = new CustomObject();
+
+            if (count != 0)
+            {
+                requestParams.CustomData.Add("page_size", count);
+            }
+
+            if (name != null)
+            {
+                requestParams.CustomData.Add("name__like", name);
+            }
+
+            //Create GET Request
+            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("epds", m_bearerToken, requestParams);
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
             if (response == null)
@@ -72,7 +97,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 return null;
             }
 
-            // check if the response is a valid json
+            //Check if the response is a valid json
             else if (response.StartsWith("{") || response.StartsWith("["))
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
 
@@ -83,7 +108,6 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Convert nested customObject from serialization to list of epdData objects
-
             List<EPDData> epdDataFromRequest = new List<EPDData>();
 
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");

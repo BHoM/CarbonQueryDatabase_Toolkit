@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Build\CarbonQueryDatabase_Engine.dll</HintPath>
     </Reference>
+    <Reference Include="CarbonQueryDatabase_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Build\CarbonQueryDatabase_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Data_oM">
       <HintPath>..\..\BHoM\Build\Data_oM.dll</HintPath>
     </Reference>
