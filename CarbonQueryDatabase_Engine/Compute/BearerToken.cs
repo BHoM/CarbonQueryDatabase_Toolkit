@@ -39,13 +39,21 @@ namespace BH.Engine.CarbonQueryDatabase
             request.Content = new StringContent(loginString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = client.SendAsync(request).Result;
+            if (response.IsSuccessStatusCode)
+            {
 
-            string responseAuthString = response.Content.ReadAsStringAsync().Result;
-            if(responseAuthString.Split('"').Length >= 3)
-                return responseAuthString.Split('"')[3];
+                string responseAuthString = response.Content.ReadAsStringAsync().Result;
+                if (responseAuthString.Split('"').Length >= 3)
+                    return responseAuthString.Split('"')[3];
+                else
+                {
+                    BH.Engine.Reflection.Compute.RecordError("We did not receive the response we expected. The response was '" + responseAuthString + "'");
+                    return null;
+                }
+            }
             else
             {
-                BH.Engine.Reflection.Compute.RecordWarning("We did not receive the response we expected. The response was '" + responseAuthString + "'");
+                BH.Engine.Reflection.Compute.RecordError("Request failed with code '" + response.StatusCode.ToString() + "'. Please check credentials and try again.");
                 return null;
             }
         }

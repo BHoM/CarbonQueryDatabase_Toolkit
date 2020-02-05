@@ -15,6 +15,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 {
     public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
     {
+        
         /***************************************************/
         /**** Public fields                             ****/
         /***************************************************/
@@ -43,7 +44,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         /*** Private Fields                              ***/
         /***************************************************/
 
-        private static string m_apiAddress = "https://etl-api.cqd.io/api/rest-auth/login";
-        private static string m_bearerToken;
+        private static string m_bearerToken = null;
+
     }
 }
