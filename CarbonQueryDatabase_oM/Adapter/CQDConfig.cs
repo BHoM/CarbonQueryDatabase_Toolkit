@@ -16,7 +16,7 @@ namespace BH.oM.Adapter.CarbonQueryDatabase
         public int Count { get; set; } = 0;
 
         [Description("Specifies string to search and return objects for in CarbonQueryDatabase")]
-        public string NameLike { get; set; } = null;
+        public string NameLike { get; set; } = "";
 
         /***************************************************/
     }

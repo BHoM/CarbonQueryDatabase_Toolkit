@@ -12,7 +12,7 @@ namespace BH.Engine.CarbonQueryDatabase
 {
     public static partial class Compute
     {
-        [Description("Returns a bearer token for the CarbonQueryDatabase system from the provided username and password")]
+        [Description("Returns a bearer token for the CarbonQueryDatabase (api-ui.cqd.io) from the provided username and password")]
         [Input("username", "Your username for the system")]
         [Input("password", "Your password for the system - case sensitive, do not share scripts with this saved")]
         [Input("apiAddress", "The API address to connect to, default to ETL-API")]
@@ -37,11 +37,9 @@ namespace BH.Engine.CarbonQueryDatabase
 
             string loginString = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
             request.Content = new StringContent(loginString, Encoding.UTF8, "application/json");
-
             HttpResponseMessage response = client.SendAsync(request).Result;
             if (response.IsSuccessStatusCode)
             {
-
                 string responseAuthString = response.Content.ReadAsStringAsync().Result;
                 if (responseAuthString.Split('"').Length >= 3)
                     return responseAuthString.Split('"')[3];
