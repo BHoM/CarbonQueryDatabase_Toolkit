@@ -35,25 +35,23 @@
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Data_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Data_oM">
       <HintPath>..\..\BHoM\Build\Data_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="HTTP_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="HTTP_oM">
       <HintPath>..\..\HTTP_Toolkit\Build\HTTP_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="LifeCycleAnalysis_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LifeCycleAnalysis_oM">
       <HintPath>..\..\LifeCycleAnalysis_Toolkit\Build\LifeCycleAnalysis_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Reflection_Engine, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Reflection_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Reflection_oM">
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
