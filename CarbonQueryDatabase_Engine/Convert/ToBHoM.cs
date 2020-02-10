@@ -31,8 +31,7 @@ namespace BH.Engine.CarbonQueryDatabase
                 Plant = obj.PropertyValue("plant.name")?.ToString() ?? "",
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
-                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
-                
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",          
             };
                                 
             return data;
