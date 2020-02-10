@@ -15,6 +15,13 @@ namespace BH.Adapter.CarbonQueryDatabase
 {
     public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
     {
+        
+        /***************************************************/
+        /**** Public fields                             ****/
+        /***************************************************/
+
+        public static string AdapterID = "CarbonQueryDatabaseAdapter";
+
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
@@ -22,14 +29,15 @@ namespace BH.Adapter.CarbonQueryDatabase
         [Description("Description goes here. Description goes here.")]
         [Input("username", "Provide EC3 Username")]
         [Input("password", "Provide EC3 Password")]
-        [Output("adapter", "Adapter results")]
+        [Output("adapter", "adapter results")]
+
         public CarbonQueryDatabaseAdapter(string username = "", string password = "", bool active = false)
         {
-            AdapterIdName = "CarbonQueryDatabaseAdapter";
             if (active)
             {
                 m_bearerToken = Compute.CQDBearerToken(username, password);
             }
+
         }
 
         /***************************************************/
