@@ -26,10 +26,10 @@ namespace BH.Adapter.CarbonQueryDatabase
         /**** Constructors                              ****/
         /***************************************************/
 
-        [Description("Description goes here. Description goes here.")]
+        [Description("Adapter to connect to CarbonQueryDatabase.")]
         [Input("username", "Provide EC3 Username")]
         [Input("password", "Provide EC3 Password")]
-        [Output("adapter", "adapter results")]
+        [Output("adapter", "Adapter results")]
 
         public CarbonQueryDatabaseAdapter(string username = "", string password = "", bool active = false)
         {
