@@ -37,7 +37,6 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 m_bearerToken = Compute.CQDBearerToken(username, password);
             }
-
         }
 
         /***************************************************/
