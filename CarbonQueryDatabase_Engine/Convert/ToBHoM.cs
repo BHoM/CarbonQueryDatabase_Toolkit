@@ -8,8 +8,8 @@ using System.Net.Http;
 using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 using BH.oM.Base;
-using BH.oM.LifeCycleAnalysis;
 using BH.Engine.Reflection;
+using BH.oM.CarbonQueryDatabase;
 
 namespace BH.Engine.CarbonQueryDatabase
 {

@@ -1,6 +1,5 @@
 ﻿using BH.oM.Base;
 using System.Collections.Generic;
-using BH.oM.LifeCycleAnalysis;
 using BH.oM.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
