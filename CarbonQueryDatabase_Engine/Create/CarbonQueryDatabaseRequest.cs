@@ -22,6 +22,7 @@
 
 using BH.oM.Base;
 using System.Collections.Generic;
+using BH.oM.LifeCycleAnalysis;
 using BH.oM.HTTP;
 
 namespace BH.Engine.CarbonQueryDatabase

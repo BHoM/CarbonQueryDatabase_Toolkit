@@ -31,10 +31,10 @@ using BH.oM.Adapter.CarbonQueryDatabase;
 using BH.oM.HTTP;
 using BH.Engine.HTTP;
 using BH.Engine.CarbonQueryDatabase;
+using BH.oM.LifeCycleAnalysis;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
-using BH.oM.CarbonQueryDatabase;
 
 
 namespace BH.Adapter.CarbonQueryDatabase
