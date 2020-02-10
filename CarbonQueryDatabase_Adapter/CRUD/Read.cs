@@ -1,3 +1,25 @@
+/*
+ * This file is part of the Buildings and Habitats object Model (BHoM)
+ * Copyright (c) 2015 - 2019, the respective contributors. All rights reserved.
+ *
+ * Each contributor holds copyright over their respective contributions.
+ * The project versioning (Git) records all such contribution source information.
+ *                                           
+ *                                                                              
+ * The BHoM is free software: you can redistribute it and/or modify         
+ * it under the terms of the GNU Lesser General Public License as published by  
+ * the Free Software Foundation, either version 3.0 of the License, or          
+ * (at your option) any later version.                                          
+ *                                                                              
+ * The BHoM is distributed in the hope that it will be useful,              
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of               
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                 
+ * GNU Lesser General Public License for more details.                          
+ *                                                                            
+ * You should have received a copy of the GNU Lesser General Public License     
+ * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
+ */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +36,7 @@ using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
 using BH.oM.CarbonQueryDatabase;
 
+
 namespace BH.Adapter.CarbonQueryDatabase
 {
     public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
@@ -26,7 +49,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             dynamic elems = null;
 
             int count = 0;
-            string name = "";
+            string name = null;
 
             CQDConfig config = actionConfig as CQDConfig;
             if (config != null)
@@ -34,7 +57,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 count = config.Count;
                 name = config.NameLike;
             }
-            
+
             //Choose what to pull out depending on the type.
             if (type == typeof(BH.oM.Base.BHoMObject))
                 elems = ReadEPDData(ids as dynamic, count, name);
@@ -42,19 +65,24 @@ namespace BH.Adapter.CarbonQueryDatabase
             return elems;
         }
 
+
         /***************************************************/
         /**** Private specific read methods             ****/
         /***************************************************/
 
-        private List<EPDData> ReadEPDData(List<string> ids = null, int count = 0, string name = "")
+        //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
+
+        private List<EPDData> ReadEPDData(List<string> ids = null, int count = 0, string name = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
+
             if (count != 0)
             {
                 requestParams.CustomData.Add("page_size", count);
             }
-            if (name != "")
+
+            if (name != null)
             {
                 requestParams.CustomData.Add("name__like", name);
             }
@@ -68,8 +96,11 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
                 return null;
             }
-            else if (response.StartsWith("{") || response.StartsWith("[")) //Check if the response is a valid json
+
+            //Check if the response is a valid json
+            else if (response.StartsWith("{") || response.StartsWith("["))
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+
             else
             {
                 BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
@@ -78,6 +109,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             //Convert nested customObject from serialization to list of epdData objects
             List<EPDData> epdDataFromRequest = new List<EPDData>();
+
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
@@ -91,6 +123,9 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             return epdDataFromRequest;
         }
-        /***************************************************/
-     }
+
+            /***************************************************/
+
+        }
+
 }
