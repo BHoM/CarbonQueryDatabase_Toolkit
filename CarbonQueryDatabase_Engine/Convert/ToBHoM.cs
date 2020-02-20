@@ -19,7 +19,7 @@ namespace BH.Engine.CarbonQueryDatabase
         /****           Public Methods                  ****/
         /***************************************************/
 
-        public static EPDData ToBHoMObject(this CustomObject obj)
+        public static ProductEPD ToProductEPD(this CustomObject obj)
         {
             int result = 0;
 
@@ -27,7 +27,7 @@ namespace BH.Engine.CarbonQueryDatabase
             if (obj.PropertyValue("industry_standards") != null)
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
-            EPDData data = new EPDData
+            ProductEPD epd = new ProductEPD
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
@@ -42,9 +42,34 @@ namespace BH.Engine.CarbonQueryDatabase
                 IndustryStandards = standards != null  ? standards.ToList() : new List<string>(),
             };
                                 
-            return data;
+            return epd;
         }
 
-         /***************************************************/
+        /***************************************************/
+
+        public static SectorEPD ToSectorEPD(this CustomObject obj)
+        {
+
+            IEnumerable<string> standards = null;
+            if (obj.PropertyValue("industry_standards") != null)
+                standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
+
+            SectorEPD epd = new SectorEPD
+            {
+                Id = obj.PropertyValue("id")?.ToString() ?? "",
+                Name = obj.PropertyValue("name")?.ToString() ?? "",
+                Density = obj.PropertyValue("density")?.ToString() ?? "",
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon_z") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
+                DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
+                Description = obj.PropertyValue("description")?.ToString() ?? "",
+                Jurisdiction = obj.PropertyValue("jurisdiction")?.ToString() ?? "",
+                Publisher = obj.PropertyValue("publishers")?.ToString() ?? "",
+            };
+
+            return epd;
+        }
+
+        /***************************************************/
     }
 }

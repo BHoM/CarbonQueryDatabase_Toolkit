@@ -36,8 +36,8 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Choose what to pull out depending on the type.
-            if (type == typeof(BH.oM.Base.BHoMObject))
-                elems = ReadEPDData(ids as dynamic, count, name);
+            if (type == typeof(ProductEPD))
+                elems = ReadProductEPD(ids as dynamic, count, name);
 
             return elems;
         }
@@ -45,7 +45,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
         /**** Private specific read methods             ****/
         /***************************************************/
-        private List<EPDData> ReadEPDData(List<string> ids = null, int count = 0, string name = null)
+        private List<ProductEPD> ReadProductEPD(List<string> ids = null, int count = 0, string name = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
@@ -81,7 +81,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Convert nested customObject from serialization to list of epdData objects
-            List<EPDData> epdDataFromRequest = new List<EPDData>();
+            List<ProductEPD> epdDataFromRequest = new List<ProductEPD>();
 
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
@@ -89,7 +89,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    EPDData epdData = BH.Engine.CarbonQueryDatabase.Convert.ToBHoMObject(co);
+                    ProductEPD epdData = BH.Engine.CarbonQueryDatabase.Convert.ToProductEPD(co);
                     epdDataFromRequest.Add(epdData);
                 }
             }
@@ -97,8 +97,62 @@ namespace BH.Adapter.CarbonQueryDatabase
             return epdDataFromRequest;
         }
 
-            /***************************************************/
+        /***************************************************/
 
+        private List<SectorEPD> ReadSectorEPD(List<string> ids = null, int count = 0, string name = null)
+        {
+            //Add parameters per config
+            CustomObject requestParams = new CustomObject();
+
+            if (count != 0)
+            {
+                requestParams.CustomData.Add("page_size", count);
+            }
+
+            if (name != null)
+            {
+                requestParams.CustomData.Add("name__like", name);
+            }
+
+            //Create GET Request
+            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("industry_epds", m_bearerToken, requestParams);
+            string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
+            List<object> responseObjs = null;
+            if (response == null)
+            {
+                BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
+                return null;
+            }
+
+            //Check if the response is a valid json
+            else if (response.StartsWith("{") || response.StartsWith("["))
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+
+            else
+            {
+                BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
+                return null;
+            }
+
+            //Convert nested customObject from serialization to list of epdData objects
+            List<SectorEPD> epdDataFromRequest = new List<SectorEPD>();
+
+            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
+            IEnumerable objList = epdObjects as IEnumerable;
+            if (objList != null)
+            {
+                foreach (CustomObject co in objList)
+                {
+                    SectorEPD epdData = BH.Engine.CarbonQueryDatabase.Convert.ToSectorEPD(co);
+                    epdDataFromRequest.Add(epdData);
+                }
+            }
+
+            return epdDataFromRequest;
         }
+
+        /***************************************************/
+
+    }
 
 }
