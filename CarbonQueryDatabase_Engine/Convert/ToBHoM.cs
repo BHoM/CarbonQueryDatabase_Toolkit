@@ -23,6 +23,10 @@ namespace BH.Engine.CarbonQueryDatabase
         {
             int result = 0;
 
+            IEnumerable<string> standards = null;
+            if (obj.PropertyValue("industry_standards") != null)
+                standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
+
             EPDData data = new EPDData
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
@@ -31,7 +35,11 @@ namespace BH.Engine.CarbonQueryDatabase
                 Plant = obj.PropertyValue("plant.name")?.ToString() ?? "",
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
-                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",          
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon_z") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
+                DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
+                Description = obj.PropertyValue("description")?.ToString() ?? "",
+                IndustryStandards = standards != null  ? standards.ToList() : new List<string>(),
             };
                                 
             return data;
