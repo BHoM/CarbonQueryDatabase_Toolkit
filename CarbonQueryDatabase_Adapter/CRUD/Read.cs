@@ -24,22 +24,16 @@ namespace BH.Adapter.CarbonQueryDatabase
         protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids, ActionConfig actionConfig = null)
         {
             dynamic elems = null;
+            CQDConfig config = null;
 
-            int count = 0;
-            string name = null;
-
-            CQDConfig config = actionConfig as CQDConfig;
-            if (config != null)
-            {
-                count = config.Count;
-                name = config.NameLike;
-            }
+            if (actionConfig is CQDConfig)
+                config = actionConfig as CQDConfig;
 
             //Choose what to pull out depending on the type.
             if (type == typeof(ProductEPD))
-                elems = ReadProductEPD(ids as dynamic, count, name);
+                elems = ReadProductEPD(ids as dynamic, config);
             else if (type == typeof(SectorEPD))
-                elems = ReadSectorEPD(ids as dynamic, count, name);
+                elems = ReadSectorEPD(ids as dynamic, config);
 
             return elems;
         }
@@ -47,23 +41,44 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
         /**** Private specific read methods             ****/
         /***************************************************/
-        private List<ProductEPD> ReadProductEPD(List<string> ids = null, int count = 0, string name = null)
+        private List<ProductEPD> ReadProductEPD(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
+            int count = 0;
+            string name = null;
+            string plantName = null;
+            List<string> category = null;
 
-            if (count != 0)
+            if (config != null)
             {
-                requestParams.CustomData.Add("page_size", count);
-            }
-
-            if (name != null)
-            {
-                requestParams.CustomData.Add("name__like", name);
+                {
+                    count = config.Count;
+                    name = config.NameLike;
+                    plantName = config.PlantName;
+                    category = config.Category;
+                }
+                if (count != 0)
+                {
+                    requestParams.CustomData.Add("page_size", count);
+                }
+                if (name != null)
+                {
+                    requestParams.CustomData.Add("name__like", name);
+                }
+                if (plantName != null)
+                {
+                    requestParams.CustomData.Add("plant__name__like", plantName);
+                }
+                if (category.Count > 0)
+                {
+                    requestParams.CustomData.Add("category__name__like", category);
+                }
             }
 
             //Create GET Request
             GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("epds", m_bearerToken, requestParams);
+            string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
             if (response == null)
@@ -101,19 +116,29 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         /***************************************************/
 
-        private List<SectorEPD> ReadSectorEPD(List<string> ids = null, int count = 0, string name = null)
+        private List<SectorEPD> ReadSectorEPD(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
+            int count = 0;
+            string name = null;
+            string plantName = null;
 
-            if (count != 0)
+            if (config != null)
             {
-                requestParams.CustomData.Add("page_size", count);
-            }
-
-            if (name != null)
-            {
-                requestParams.CustomData.Add("name__like", name);
+                {
+                    count = config.Count;
+                    name = config.NameLike;
+                    plantName = config.PlantName;
+                }
+                if (count != 0)
+                {
+                    requestParams.CustomData.Add("page_size", count);
+                }
+                if (name != null)
+                {
+                    requestParams.CustomData.Add("name__like", name);
+                }
             }
 
             //Create GET Request

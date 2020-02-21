@@ -1,4 +1,5 @@
 ﻿using BH.oM.Adapter;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace BH.oM.Adapter.CarbonQueryDatabase
@@ -15,8 +16,14 @@ namespace BH.oM.Adapter.CarbonQueryDatabase
         [Description("Sets maximum amount of items to return from CarbonQueryDatabase")]
         public int Count { get; set; } = 0;
 
-        [Description("Specifies string to search and return objects for in CarbonQueryDatabase")]
+        [Description("Specifies string to search and return objects for in CarbonQueryDatabase, ie RedBuilt RedLam LVL")]
         public string NameLike { get; set; } = null;
+
+        [Description("Specifies plant name to search and return objects for in CarbonQueryDatabase, ie Dupont")]
+        public string PlantName { get; set; } = null;
+
+        [Description("Specifies category to search and return objects for in CarbonQueryDatabase, ie Steel")]
+        public List<string> Category { get; set; } = null;
 
         /***************************************************/
     }
