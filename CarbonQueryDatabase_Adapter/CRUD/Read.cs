@@ -38,6 +38,8 @@ namespace BH.Adapter.CarbonQueryDatabase
             //Choose what to pull out depending on the type.
             if (type == typeof(ProductEPD))
                 elems = ReadProductEPD(ids as dynamic, count, name);
+            else if (type == typeof(SectorEPD))
+                elems = ReadSectorEPD(ids as dynamic, count, name);
 
             return elems;
         }
