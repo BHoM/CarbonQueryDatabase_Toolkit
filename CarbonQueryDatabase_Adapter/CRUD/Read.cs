@@ -72,7 +72,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 }
                 if (category.Count > 0)
                 {
-                    requestParams.CustomData.Add("category__name__like", category);
+                    requestParams.CustomData.Add("category", category);
                 }
             }
 
