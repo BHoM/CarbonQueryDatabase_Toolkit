@@ -22,9 +22,6 @@ namespace BH.oM.Adapter.CarbonQueryDatabase
         [Description("Specifies plant name to search and return objects for in CarbonQueryDatabase, ie Dupont")]
         public string PlantName { get; set; } = null;
 
-        [Description("Specifies category to search and return objects for in CarbonQueryDatabase, ie Steel")]
-        public List<string> Category { get; set; } = null;
-
         /***************************************************/
     }
 }
