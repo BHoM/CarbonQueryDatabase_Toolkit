@@ -48,7 +48,6 @@ namespace BH.Adapter.CarbonQueryDatabase
             int count = 0;
             string name = null;
             string plantName = null;
-            List<string> category = null;
 
             if (config != null)
             {
@@ -56,7 +55,6 @@ namespace BH.Adapter.CarbonQueryDatabase
                     count = config.Count;
                     name = config.NameLike;
                     plantName = config.PlantName;
-                    category = config.Category;
                 }
                 if (count != 0)
                 {
@@ -69,10 +67,6 @@ namespace BH.Adapter.CarbonQueryDatabase
                 if (plantName != null)
                 {
                     requestParams.CustomData.Add("plant__name__like", plantName);
-                }
-                if (category.Count > 0)
-                {
-                    requestParams.CustomData.Add("category", category);
                 }
             }
 
