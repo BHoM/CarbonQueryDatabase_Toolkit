@@ -79,7 +79,7 @@ namespace BH.Engine.CarbonQueryDatabase
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
-                GwpPerKG = obj.PropertyValue("gwp")?.ToString() ?? "",
+                GwpPerDeclaredUnit = obj.PropertyValue("gwp")?.ToString() ?? "",
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon_z") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
