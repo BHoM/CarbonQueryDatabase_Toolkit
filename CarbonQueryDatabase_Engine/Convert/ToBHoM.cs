@@ -65,7 +65,7 @@ namespace BH.Engine.CarbonQueryDatabase
             if (obj.PropertyValue("geography") != null)
             {
                 {
-                    IEnumerable jurs = (IEnumerable)obj.PropertyValue("geography");
+                    IEnumerable jurs = (IEnumerable)obj.PropertyValue("geography.country_codes");
                     foreach (object jur in jurs)
                     {
                         jurisdictionNames.Add(jur.ToString());
