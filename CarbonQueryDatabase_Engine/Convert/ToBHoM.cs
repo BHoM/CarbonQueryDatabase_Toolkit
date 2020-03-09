@@ -37,6 +37,7 @@ namespace BH.Engine.CarbonQueryDatabase
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
                 GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                GwpPerDeclaredUnit = obj.PropertyValue("gwp")?.ToString() ?? "",
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon_z") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
@@ -51,7 +52,6 @@ namespace BH.Engine.CarbonQueryDatabase
         public static SectorEnvironmentalProductDeclaration ToSectorEnvironmentalProductDeclaration(this CustomObject obj)
         {
             List<string> publisherNames = new List<string>();
-
             if (obj.PropertyValue("publishers") != null)
             {
                 IEnumerable pubs = (IEnumerable)obj.PropertyValue("publishers");
@@ -64,21 +64,19 @@ namespace BH.Engine.CarbonQueryDatabase
             List<string> jurisdictionNames = new List<string>();
             if (obj.PropertyValue("geography") != null)
             {
+                IEnumerable jurs = (IEnumerable)obj.PropertyValue("geography.country_codes");
+                foreach (object jur in jurs)
                 {
-                    IEnumerable jurs = (IEnumerable)obj.PropertyValue("geography.country_codes");
-                    foreach (object jur in jurs)
-                    {
-                        jurisdictionNames.Add(jur.ToString());
-                    }
+                   jurisdictionNames.Add(jur.ToString());
                 }
-            }
-                
+            }                
 
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
                 GwpPerDeclaredUnit = obj.PropertyValue("gwp")?.ToString() ?? "",
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon_z") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
