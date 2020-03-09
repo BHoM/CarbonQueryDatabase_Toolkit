@@ -30,10 +30,10 @@ namespace BH.Adapter.CarbonQueryDatabase
                 config = actionConfig as CQDConfig;
 
             //Choose what to pull out depending on the type.
-            if (type == typeof(ProductEPD))
-                elems = ReadProductEPD(ids as dynamic, config);
-            else if (type == typeof(SectorEPD))
-                elems = ReadSectorEPD(ids as dynamic, config);
+            if (type == typeof(EnvironmentalProductDeclaration))
+                elems = ReadEnvironmentalProductDeclaration(ids as dynamic, config);
+            else if (type == typeof(SectorEnvironmentalProductDeclaration))
+                elems = ReadSectorEnvironmentalProductDeclaration(ids as dynamic, config);
 
             return elems;
         }
@@ -41,7 +41,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
         /**** Private specific read methods             ****/
         /***************************************************/
-        private List<ProductEPD> ReadProductEPD(List<string> ids = null, CQDConfig config = null)
+        private List<EnvironmentalProductDeclaration> ReadEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
@@ -92,7 +92,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Convert nested customObject from serialization to list of epdData objects
-            List<ProductEPD> epdDataFromRequest = new List<ProductEPD>();
+            List<EnvironmentalProductDeclaration> epdDataFromRequest = new List<EnvironmentalProductDeclaration>();
 
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
@@ -100,7 +100,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    ProductEPD epdData = BH.Engine.CarbonQueryDatabase.Convert.ToProductEPD(co);
+                    EnvironmentalProductDeclaration epdData = BH.Engine.CarbonQueryDatabase.Convert.ToEPD(co);
                     epdDataFromRequest.Add(epdData);
                 }
             }
@@ -110,7 +110,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         /***************************************************/
 
-        private List<SectorEPD> ReadSectorEPD(List<string> ids = null, CQDConfig config = null)
+        private List<SectorEnvironmentalProductDeclaration> ReadSectorEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
             CustomObject requestParams = new CustomObject();
@@ -156,7 +156,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Convert nested customObject from serialization to list of epdData objects
-            List<SectorEPD> epdDataFromRequest = new List<SectorEPD>();
+            List<SectorEnvironmentalProductDeclaration> epdDataFromRequest = new List<SectorEnvironmentalProductDeclaration>();
 
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
@@ -164,7 +164,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    SectorEPD epdData = BH.Engine.CarbonQueryDatabase.Convert.ToSectorEPD(co);
+                    SectorEnvironmentalProductDeclaration epdData = BH.Engine.CarbonQueryDatabase.Convert.ToSectorEPD(co);
                     epdDataFromRequest.Add(epdData);
                 }
             }
