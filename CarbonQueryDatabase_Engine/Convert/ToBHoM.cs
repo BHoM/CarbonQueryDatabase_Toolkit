@@ -20,7 +20,7 @@ namespace BH.Engine.CarbonQueryDatabase
         /****           Public Methods                  ****/
         /***************************************************/
 
-        public static EnvironmentalProductDeclaration ToEPD(this CustomObject obj)
+        public static EnvironmentalProductDeclaration ToEnvironmentalProductDeclaration(this CustomObject obj)
         {
             int result = 0;
 
@@ -48,7 +48,7 @@ namespace BH.Engine.CarbonQueryDatabase
 
         /***************************************************/
 
-        public static SectorEnvironmentalProductDeclaration ToSectorEPD(this CustomObject obj)
+        public static SectorEnvironmentalProductDeclaration ToSectorEnvironmentalProductDeclaration(this CustomObject obj)
         {
             List<string> publisherNames = new List<string>();
 
