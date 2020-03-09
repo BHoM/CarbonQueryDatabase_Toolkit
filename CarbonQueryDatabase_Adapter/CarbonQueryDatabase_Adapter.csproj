@@ -56,7 +56,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="LifeCycleAnalysis_oM">
-      <HintPath>..\..\LifeCycleAnalysis_Toolkit\Build\LifeCycleAnalysis_oM.dll</HintPath>
+      <HintPath>..\..\LifeCycleAssessment_Toolkit\Build\LifeCycleAnalysis_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine">

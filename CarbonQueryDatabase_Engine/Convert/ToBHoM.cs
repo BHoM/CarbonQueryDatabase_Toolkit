@@ -20,7 +20,7 @@ namespace BH.Engine.CarbonQueryDatabase
         /****           Public Methods                  ****/
         /***************************************************/
 
-        public static ProductEPD ToProductEPD(this CustomObject obj)
+        public static EnvironmentalProductDeclaration ToEPD(this CustomObject obj)
         {
             int result = 0;
 
@@ -28,7 +28,7 @@ namespace BH.Engine.CarbonQueryDatabase
             if (obj.PropertyValue("industry_standards") != null)
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
-            ProductEPD epd = new ProductEPD
+            EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
@@ -48,7 +48,7 @@ namespace BH.Engine.CarbonQueryDatabase
 
         /***************************************************/
 
-        public static SectorEPD ToSectorEPD(this CustomObject obj)
+        public static SectorEnvironmentalProductDeclaration ToSectorEPD(this CustomObject obj)
         {
             List<string> publisherNames = new List<string>();
 
@@ -74,7 +74,7 @@ namespace BH.Engine.CarbonQueryDatabase
             }
                 
 
-            SectorEPD epd = new SectorEPD
+            SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
