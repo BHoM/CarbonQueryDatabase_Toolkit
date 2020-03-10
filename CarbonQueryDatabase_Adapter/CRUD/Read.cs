@@ -9,7 +9,7 @@ using BH.oM.Adapter.CarbonQueryDatabase;
 using BH.oM.HTTP;
 using BH.Engine.HTTP;
 using BH.Engine.CarbonQueryDatabase;
-using BH.oM.LifeCycleAnalysis;
+using BH.oM.LifeCycleAssessment;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;

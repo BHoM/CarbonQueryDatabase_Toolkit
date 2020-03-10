@@ -55,8 +55,8 @@
       <HintPath>..\..\HTTP_Toolkit\Build\HTTP_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LifeCycleAnalysis_oM">
-      <HintPath>..\..\LifeCycleAssessment_Toolkit\Build\LifeCycleAnalysis_oM.dll</HintPath>
+    <Reference Include="LifeCycleAssessment_oM">
+      <HintPath>..\..\LifeCycleAssessment_Toolkit\Build\LifeCycleAssessment_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine">
