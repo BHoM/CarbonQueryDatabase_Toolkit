@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 using BH.oM.Base;
-using BH.oM.LifeCycleAnalysis;
+using BH.oM.LifeCycleAssessment;
 using BH.Engine.Reflection;
 using System.Collections;
 
