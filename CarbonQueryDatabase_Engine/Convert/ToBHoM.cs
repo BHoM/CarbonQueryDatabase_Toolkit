@@ -50,6 +50,9 @@ namespace BH.Engine.CarbonQueryDatabase
             if (obj.PropertyValue("industry_standards") != null)
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
+            string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
+            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
+
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
@@ -58,6 +61,9 @@ namespace BH.Engine.CarbonQueryDatabase
                 Plant = obj.PropertyValue("plant.name")?.ToString() ?? "",
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                GwpPerDeclaredUnit = obj.PropertyValue("gwp")?.ToString() ?? "",
+                GlobalWarmingPotential = gwpVal,
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
@@ -89,13 +95,19 @@ namespace BH.Engine.CarbonQueryDatabase
                 {
                    jurisdictionNames.Add(jur.ToString());
                 }
-            }                
+            }
+
+            string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
+            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = obj.PropertyValue("density")?.ToString() ?? "",
+                GwpPerKG = obj.PropertyValue("gwp_per_kg")?.ToString() ?? "",
+                GwpPerDeclaredUnit = obj.PropertyValue("gwp")?.ToString() ?? "",
+                GlobalWarmingPotential = gwpVal,
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
