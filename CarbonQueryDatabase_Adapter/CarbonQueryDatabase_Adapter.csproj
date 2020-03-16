@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarbonQueryDatabase_Adapter.cs" />
+    <Compile Include="Convert\ToBHoM.cs" />
     <Compile Include="CRUD\Read.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
