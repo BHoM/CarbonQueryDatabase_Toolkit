@@ -122,7 +122,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    EnvironmentalProductDeclaration epdData = BH.Engine.CarbonQueryDatabase.Convert.ToEnvironmentalProductDeclaration(co);
+                    EnvironmentalProductDeclaration epdData = Adapter.CarbonQueryDatabase.Convert.ToEnvironmentalProductDeclaration(co);
                     epdDataFromRequest.Add(epdData);
                 }
             }
@@ -186,7 +186,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    SectorEnvironmentalProductDeclaration epdData = BH.Engine.CarbonQueryDatabase.Convert.ToSectorEnvironmentalProductDeclaration(co);
+                    SectorEnvironmentalProductDeclaration epdData = Adapter.CarbonQueryDatabase.Convert.ToSectorEnvironmentalProductDeclaration(co);
                     epdDataFromRequest.Add(epdData);
                 }
             }

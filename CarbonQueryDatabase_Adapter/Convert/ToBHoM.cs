@@ -34,7 +34,7 @@ using BH.oM.LifeCycleAssessment;
 using BH.Engine.Reflection;
 using System.Collections;
 
-namespace BH.Engine.CarbonQueryDatabase
+namespace BH.Adapter.CarbonQueryDatabase
 {
     public static partial class Convert
     {

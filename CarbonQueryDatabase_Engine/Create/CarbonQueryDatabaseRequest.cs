@@ -24,6 +24,8 @@ using BH.oM.Base;
 using System.Collections.Generic;
 using BH.oM.LifeCycleAssessment;
 using BH.oM.HTTP;
+using BH.oM.Reflection.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.CarbonQueryDatabase
 {
@@ -33,7 +35,11 @@ namespace BH.Engine.CarbonQueryDatabase
         /**** Public  Method                            ****/
         /***************************************************/
 
-        /***************************************************/
+        [Description("Create a GetRequest for the CarbonQueryDatabase")]
+        [Input("apiCommand", "The CarbonQueryDatabase REST API command to create a GetRequest with")]
+        [Input("bearerToken", "The CarbonQueryDatabase bearerToken (this can be acquired using Compute BearerToken with your EC3 username and password)")]
+        [Input("parameters", "An optional CustomObject with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
+        [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
 
         public static GetRequest CQDGetRequest(string apiCommand, string bearerToken, CustomObject parameters = null)
         {

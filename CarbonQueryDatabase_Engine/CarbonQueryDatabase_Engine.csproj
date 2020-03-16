@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\BearerToken.cs" />
-    <Compile Include="Convert\ToBHoM.cs" />
     <Compile Include="Create\CarbonQueryDatabaseRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
