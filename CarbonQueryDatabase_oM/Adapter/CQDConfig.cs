@@ -36,13 +36,13 @@ namespace BH.oM.Adapter.CarbonQueryDatabase
         /***************************************************/
 
         [Description("Sets maximum amount of items to return from CarbonQueryDatabase")]
-        public int Count { get; set; } = 0;
+        public virtual int Count { get; set; } = 0;
 
         [Description("Specifies string to search and return objects for in CarbonQueryDatabase, ie RedBuilt RedLam LVL")]
-        public string NameLike { get; set; } = null;
+        public virtual string NameLike { get; set; } = null;
 
         [Description("Specifies plant name to search and return objects for in CarbonQueryDatabase, ie Dupont")]
-        public string PlantName { get; set; } = null;
+        public virtual string PlantName { get; set; } = null;
 
         /***************************************************/
     }
