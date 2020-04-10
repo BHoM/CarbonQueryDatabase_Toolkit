@@ -50,6 +50,9 @@ namespace BH.Adapter.CarbonQueryDatabase
             if (obj.PropertyValue("industry_standards") != null)
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
+            string densityString = obj.PropertyValue("density")?.ToString() ?? "";
+            double density = ToSIDensity(densityString);
+
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
@@ -60,7 +63,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 Manufacturer = obj.PropertyValue("manufacturer.name")?.ToString() ?? "",
                 Plant = obj.PropertyValue("plant.name")?.ToString() ?? "",
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
-                Density = obj.PropertyValue("density")?.ToString() ?? "",
+                Density = density,
                 GlobalWarmingPotential = gwpVal,
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
@@ -94,7 +97,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                    jurisdictionNames.Add(jur.ToString());
                 }
             }
-
+            string densityString = obj.PropertyValue("density")?.ToString() ?? "";
+            double density = ToSIDensity(densityString);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
@@ -102,7 +106,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
-                Density = obj.PropertyValue("density")?.ToString() ?? "",
+                Density = density,
                 GlobalWarmingPotential = gwpVal,
                 BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
                 DeclaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "",
@@ -115,5 +119,29 @@ namespace BH.Adapter.CarbonQueryDatabase
         }
 
         /***************************************************/
+
+        public static double ToSIDensity(this string str)
+        {
+            string[] strings = str.Split(' ');
+            string numString = strings[0];
+            string unitString = (strings.Length>1) ? strings[1] : "";
+
+            double densityVal;
+            Double.TryParse(numString, out densityVal);
+
+            double unitMult = 1;     
+            switch(unitString)
+            {
+                case "kg/m3":
+                case "kg/m³":
+                    unitMult = 1;
+                    break;
+                case "lb/y3":
+                    unitMult = 0.593276;
+                    break;
+            }
+            double densitySI = unitMult * densityVal;
+            return densitySI;
+        }
     }
 }
