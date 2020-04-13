@@ -52,7 +52,6 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             string densityString = obj.PropertyValue("density")?.ToString() ?? "";
             double density = ToSIDensity(densityString);
-
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
@@ -97,7 +96,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                    jurisdictionNames.Add(jur.ToString());
                 }
             }
-            string densityString = obj.PropertyValue("density")?.ToString() ?? "";
+            string densityString = obj.PropertyValue("density_max")?.ToString() ?? "";
             double density = ToSIDensity(densityString);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
