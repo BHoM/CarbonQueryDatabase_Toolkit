@@ -51,16 +51,16 @@ namespace BH.Adapter.CarbonQueryDatabase
             if (obj.PropertyValue("industry_standards") != null)
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
+            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
+            string epdUnit = GetUnitsFromString(declaredUnit);
+            double epdUnitMult = ConvertToSI(1, epdUnit);
+
             string densityString = obj.PropertyValue("density")?.ToString() ?? "";
             double densityVal = GetValFromString(densityString);
             string densityUnits = GetUnitsFromString(densityString);
             double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
-            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
-
-            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
-            string epdUnit = GetUnitsFromString(declaredUnit);
-            double epdUnitMult = ConvertToSI(1, epdUnit);
+            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")))*epdUnitMult;
 
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
@@ -72,7 +72,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = density,
                 GlobalWarmingPotential = gwpVal,
-                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
+                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
                 IndustryStandards = standards != null  ? standards.ToList() : new List<string>(),
             };
@@ -103,16 +103,18 @@ namespace BH.Adapter.CarbonQueryDatabase
                    jurisdictionNames.Add(jur.ToString());
                 }
             }
+
+            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
+            string epdUnit = GetUnitsFromString(declaredUnit);
+            double epdUnitMult = ConvertToSI(1, epdUnit);
+
             string densityString = obj.PropertyValue("density_max")?.ToString() ?? "";
             double densityVal = GetValFromString(densityString);
             string densityUnits = GetUnitsFromString(densityString);
             double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
-            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
+            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")))*epdUnitMult;
 
-            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
-            string epdUnit = GetUnitsFromString(declaredUnit);
-            double epdUnitMult = ConvertToSI(1, epdUnit);
 
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
@@ -121,7 +123,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = density,
                 GlobalWarmingPotential = gwpVal,
-                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) : double.NaN,
+                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
                 Jurisdiction = jurisdictionNames,
                 Publisher = publisherNames,
