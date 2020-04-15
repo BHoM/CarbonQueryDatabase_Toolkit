@@ -32,6 +32,7 @@ using BH.oM.Reflection.Attributes;
 using BH.oM.Base;
 using BH.oM.LifeCycleAssessment;
 using BH.Engine.Reflection;
+using BH.Engine.Localisation;
 using System.Collections;
 
 namespace BH.Adapter.CarbonQueryDatabase
@@ -51,12 +52,19 @@ namespace BH.Adapter.CarbonQueryDatabase
                 standards = obj.PropertyValue("industry_standards") as IEnumerable<string>;
 
             string densityString = obj.PropertyValue("density")?.ToString() ?? "";
-            double density = ToSIDensity(densityString);
+            double densityVal = GetValFromString(densityString);
+            string densityUnits = GetUnitsFromString(densityString);
+            double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
+            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
+            string epdUnit = GetUnitsFromString(declaredUnit);
+            double epdUnitMult = ConvertToSI(1, epdUnit);
+
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
+                QuantityType = QuantityType.Volume,
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Manufacturer = obj.PropertyValue("manufacturer.name")?.ToString() ?? "",
@@ -96,12 +104,19 @@ namespace BH.Adapter.CarbonQueryDatabase
                 }
             }
             string densityString = obj.PropertyValue("density_max")?.ToString() ?? "";
-            double density = ToSIDensity(densityString);
+            double densityVal = GetValFromString(densityString);
+            string densityUnits = GetUnitsFromString(densityString);
+            double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")));
 
+            string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
+            string epdUnit = GetUnitsFromString(declaredUnit);
+            double epdUnitMult = ConvertToSI(1, epdUnit);
+
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
+                QuantityType = QuantityType.Volume,
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = density,
@@ -117,17 +132,10 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         /***************************************************/
 
-        public static double ToSIDensity(this string str)
+        public static double ConvertToSI(double val, string unitFrom)
         {
-            string[] strings = str.Split(' ');
-            string numString = strings[0];
-            string unitString = (strings.Length>1) ? strings[1] : "";
-
-            double densityVal;
-            Double.TryParse(numString, out densityVal);
-
             double unitMult = 1;     
-            switch(unitString)
+            switch(unitFrom)
             {
                 case "kg/m3":
                 case "kg/m³":
@@ -136,9 +144,56 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "lb/y3":
                     unitMult = 0.593276;
                     break;
+                case "yd3":
+                case "y3":
+                case "yd³":
+                case "y³":
+                    unitMult = 1.30795;
+                    break;
+                case "t":
+                case "short ton":
+                    unitMult = 0.000984207;
+                    break;
+                case "tonne":
+                case "metric ton":
+                    unitMult = 0.001;
+                    break;
+                case "sq ft":
+                case "ft2":
+                case "square ft":
+                case "SF":
+                    unitMult = 10.7639;
+                    break;
+                case "in":
+                case "inches":
+                    return Engine.Localisation.Length.Convert.FromInch(val);
+                case "ft":
+                case "feet":
+                    return Engine.Localisation.Length.Convert.FromFoot(val);
             }
-            double densitySI = unitMult * densityVal;
-            return densitySI;
+            double valueSI = unitMult * val;
+            return valueSI;
         }
+
+        /***************************************************/
+
+        public static double GetValFromString(this string str)
+        {
+            string[] strings = str.Split(' ');
+            string numString = strings[0];
+            double val = double.NaN;
+            Double.TryParse(numString, out val);
+            return val;
+        }
+
+        /***************************************************/
+
+        public static string GetUnitsFromString(this string str)
+        {
+            string[] strings = str.Split(' ');
+            string units = (strings.Length > 1) ? strings[1] : "";
+            return units;
+        }
+
     }
 }
