@@ -161,6 +161,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                     unitMult = 0.001;
                     break;
                 case "sq ft":
+                case "sqft":
                 case "ft2":
                 case "square ft":
                 case "SF":
