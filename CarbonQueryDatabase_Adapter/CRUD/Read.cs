@@ -93,7 +93,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Create GET Request
-            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("epds", m_bearerToken, requestParams);
+            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
             string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
@@ -158,7 +158,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Create GET Request
-            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CQDGetRequest("industry_epds", m_bearerToken, requestParams);
+            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
             if (response == null)
