@@ -45,7 +45,7 @@
     </Reference>
     <Reference Include="LifeCycleAssessment_oM">
       <HintPath>..\..\BHoM\Build\LifeCycleAssessment_oM.dll</HintPath>
-	  <Private>False</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\BearerToken.cs" />
-    <Compile Include="Create\CarbonQueryDatabaseRequest.cs" />
+    <Compile Include="Create\GetRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
