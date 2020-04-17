@@ -32,7 +32,6 @@ using BH.oM.Reflection.Attributes;
 using BH.oM.Base;
 using BH.oM.LifeCycleAssessment;
 using BH.Engine.Reflection;
-using BH.Engine.Localisation;
 using System.Collections;
 using BH.Engine.CarbonQueryDatabase;
 

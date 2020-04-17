@@ -59,9 +59,6 @@
       <HintPath>..\..\BHoM\Build\LifeCycleAssessment_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Localisation_Engine">
-      <HintPath>..\..\Localisation_Toolkit\Build\Localisation_Engine.dll</HintPath>
-    </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
       <Private>False</Private>
