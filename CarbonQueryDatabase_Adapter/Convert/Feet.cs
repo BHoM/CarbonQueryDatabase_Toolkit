@@ -34,18 +34,18 @@ namespace BH.Adapter.CarbonQueryDatabase
     // replace this convert method with central unit conversion methods. 
     public static partial class Convert
     {
-        [Description("Convert foot into SI units (meter)")]
-        [Input("foot", "Foot measurement")]
-        [Output("si", "Foot represented as SI units (meter)")]
-        public static double FromFoot(this double foot)
+        [Description("Convert feet into SI units (meter)")]
+        [Input("feet", "Feet measurement")]
+        [Output("si", "Feet represented as SI units (meter)")]
+        public static double FromFeet(this double feet)
         {
-            return foot * 0.3048;
+            return feet * 0.3048;
         }
 
-        [Description("Convert SI units (meter) into foot")]
+        [Description("Convert SI units (meter) into feet")]
         [Input("si", "SI measurement (meter)")]
-        [Output("foot", "SI units (meter) represented as foot")]
-        public static double ToFoot(this double si)
+        [Output("foot", "SI units (meter) represented as feet")]
+        public static double ToFeet(this double si)
         {
             return si / 0.3048;
         }
