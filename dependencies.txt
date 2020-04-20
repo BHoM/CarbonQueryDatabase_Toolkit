@@ -2,4 +2,3 @@ BHoM/BHoM
 BHoM/BHoM_Engine
 BHoM/BHoM_Adapter
 BHoM/HTTP_Toolkit
-BuroHappoldEngineering/LifeCycleAssessment_Toolkit
