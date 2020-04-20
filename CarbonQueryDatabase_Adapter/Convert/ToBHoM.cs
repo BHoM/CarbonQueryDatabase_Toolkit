@@ -172,7 +172,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                     return FromInch(val); // Replace when method is developed
                 case "ft":
                 case "feet":
-                    return FromFoot(val); // Replace when method is developed
+                    return FromFeet(val); // Replace when method is developed
             }
             double valueSI = unitMult * val;
             return valueSI;
