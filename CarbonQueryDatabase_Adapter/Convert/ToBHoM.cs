@@ -165,6 +165,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "inches":
                 case "ft":
                 case "feet":
+                case "m":
+                case "meters":
+                case "metres":
                     return QuantityType.Length;
             }
             return QuantityType.Undefined;
