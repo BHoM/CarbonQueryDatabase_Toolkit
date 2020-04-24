@@ -157,6 +157,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "ft2":
                 case "square ft":
                 case "SF":
+                case "m2":
+                case "M2":
+                case "sq m":
                     return QuantityType.Area;
                 case "in":
                 case "inches":
