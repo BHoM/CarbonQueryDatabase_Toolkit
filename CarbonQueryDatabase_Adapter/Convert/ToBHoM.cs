@@ -106,6 +106,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
             string epdUnit = GetUnitsFromString(declaredUnit);
+            QuantityType quantityType = GetQuantityTypeFromString(epdUnit);
             double epdUnitMult = ConvertToSI(1, epdUnit);
 
             string densityString = obj.PropertyValue("density_max")?.ToString() ?? "";
@@ -115,10 +116,9 @@ namespace BH.Adapter.CarbonQueryDatabase
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")))*epdUnitMult;
 
-
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
-                QuantityType = QuantityType.Volume,
+                QuantityType = quantityType,
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = density,
@@ -134,10 +134,45 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         /***************************************************/
 
+
+
+        public static QuantityType GetQuantityTypeFromString(string unitFrom)
+        {    
+            switch(unitFrom)
+            {
+                case "yd3":
+                case "y3":
+                case "yd³":
+                case "y³":
+                    return QuantityType.Volume;
+                case "t":
+                case "short ton":
+                case "tonne":
+                case "metric ton":
+                case "lb":
+                case "kg":
+                    return QuantityType.Mass;
+                case "sq ft":
+                case "sqft":
+                case "ft2":
+                case "square ft":
+                case "SF":
+                    return QuantityType.Area;
+                case "in":
+                case "inches":
+                case "ft":
+                case "feet":
+                    return QuantityType.Length;
+            }
+            return QuantityType.Undefined;
+        }
+
+        /***************************************************/
+
         public static double ConvertToSI(double val, string unitFrom)
         {
-            double unitMult = 1;     
-            switch(unitFrom)
+            double unitMult = 1;
+            switch (unitFrom)
             {
                 case "kg/m3":
                 case "kg/m³":
