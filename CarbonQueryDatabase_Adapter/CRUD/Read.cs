@@ -70,30 +70,40 @@ namespace BH.Adapter.CarbonQueryDatabase
             int count = 0;
             string name = null;
             string plantName = null;
+            string id = null;
 
             if (config != null)
             {
+                id = config.Id;
+                count = config.Count;
+                name = config.NameLike;
+                plantName = config.PlantName;
+                
+                //id returns specific id and therefore supersedes other parameters
+                if (id == null)
                 {
-                    count = config.Count;
-                    name = config.NameLike;
-                    plantName = config.PlantName;
-                }
-                if (count != 0)
-                {
-                    requestParams.CustomData.Add("page_size", count);
-                }
-                if (name != null)
-                {
-                    requestParams.CustomData.Add("name__like", name);
-                }
-                if (plantName != null)
-                {
-                    requestParams.CustomData.Add("plant__name__like", plantName);
+                    if (count != 0)
+                    {
+                        requestParams.CustomData.Add("page_size", count);
+                    }
+                    if (name != null)
+                    {
+                        requestParams.CustomData.Add("name__like", name);
+                    }
+                    if (plantName != null)
+                    {
+                        requestParams.CustomData.Add("plant__name__like", plantName);
+                    }
                 }
             }
 
             //Create GET Request
-            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
+            GetRequest epdGetRequest;
+            if (id == null)
+            { epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams); }
+            else
+            { epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken); }
+
             string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
@@ -104,8 +114,15 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Check if the response is a valid json
-            else if (response.StartsWith("{") || response.StartsWith("["))
+            else if (response.StartsWith("{"))
+            {
+                response = "[" + response + "]";
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+            }
+            else if (response.StartsWith("["))
+            {
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+            }
 
             else
             {
@@ -117,6 +134,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             List<EnvironmentalProductDeclaration> epdDataFromRequest = new List<EnvironmentalProductDeclaration>();
 
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
+
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
             {
@@ -138,27 +156,35 @@ namespace BH.Adapter.CarbonQueryDatabase
             CustomObject requestParams = new CustomObject();
             int count = 0;
             string name = null;
-            string plantName = null;
+            string id = null;
 
             if (config != null)
             {
+                id = config.Id;
+                count = config.Count;
+                name = config.NameLike;
+
+                //id returns specific id and therefore supersedes other parameters
+                if (id == null)
                 {
-                    count = config.Count;
-                    name = config.NameLike;
-                    plantName = config.PlantName;
-                }
-                if (count != 0)
-                {
-                    requestParams.CustomData.Add("page_size", count);
-                }
-                if (name != null)
-                {
-                    requestParams.CustomData.Add("name__like", name);
+                    if (count != 0)
+                    {
+                        requestParams.CustomData.Add("page_size", count);
+                    }
+                    if (name != null)
+                    {
+                        requestParams.CustomData.Add("name__like", name);
+                    }
                 }
             }
 
             //Create GET Request
-            GetRequest epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
+            GetRequest epdGetRequest;
+            if (id == null)
+            { epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams); }
+            else
+            { epdGetRequest = BH.Engine.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken); }
+
             string response = BH.Engine.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
             if (response == null)
@@ -168,8 +194,15 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
 
             //Check if the response is a valid json
-            else if (response.StartsWith("{") || response.StartsWith("["))
+            else if (response.StartsWith("{"))
+            {
+                response = "[" + response + "]";
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+            }
+            else if (response.StartsWith("["))
+            {
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+            }
 
             else
             {

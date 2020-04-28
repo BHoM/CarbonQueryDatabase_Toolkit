@@ -35,6 +35,9 @@ namespace BH.oM.Adapter.CarbonQueryDatabase
         /**** Public Properties                         ****/
         /***************************************************/
 
+        [Description("Specifies ID to search and return objects for in CarbonQueryDatabase. If this is specified it supersedes other input parameters.")]
+        public virtual string Id { get; set; } = null;
+
         [Description("Sets maximum amount of items to return from CarbonQueryDatabase")]
         public virtual int Count { get; set; } = 0;
 
