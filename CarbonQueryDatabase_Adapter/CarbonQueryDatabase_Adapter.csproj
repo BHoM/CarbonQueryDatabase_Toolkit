@@ -79,11 +79,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Units_Engine">
+      <HintPath>..\..\Localisation_Toolkit\Build\Units_Engine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarbonQueryDatabase_Adapter.cs" />
-    <Compile Include="Convert\Feet.cs" />
-    <Compile Include="Convert\Inch.cs" />
     <Compile Include="Convert\ToBHoM.cs" />
     <Compile Include="CRUD\Read.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
