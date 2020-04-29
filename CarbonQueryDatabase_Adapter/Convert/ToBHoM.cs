@@ -34,6 +34,7 @@ using BH.oM.LifeCycleAssessment;
 using BH.Engine.Reflection;
 using System.Collections;
 using BH.Engine.CarbonQueryDatabase;
+using BH.Engine.Units;
 
 namespace BH.Adapter.CarbonQueryDatabase
 {
@@ -212,10 +213,10 @@ namespace BH.Adapter.CarbonQueryDatabase
                     break;
                 case "in":
                 case "inches":
-                    return FromInch(val); // Replace when method is developed
+                    return Engine.Units.Convert.FromInch(val);
                 case "ft":
                 case "feet":
-                    return FromFeet(val); // Replace when method is developed
+                    return Engine.Units.Convert.FromFeet(val);
             }
             double valueSI = unitMult * val;
             if (valueSI == 0)
