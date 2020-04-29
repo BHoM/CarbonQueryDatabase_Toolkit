@@ -218,6 +218,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                     return FromFeet(val); // Replace when method is developed
             }
             double valueSI = unitMult * val;
+            if (valueSI == 0)
+            { valueSI = double.NaN; }
             return valueSI;
         }
 
@@ -229,8 +231,6 @@ namespace BH.Adapter.CarbonQueryDatabase
             string numString = strings[0];
             double val = double.NaN;
             Double.TryParse(numString, out val);
-            if (val == 0)
-            { val = double.NaN; }
             return val;
         }
 
