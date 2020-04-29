@@ -61,7 +61,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             string densityUnits = GetUnitsFromString(densityString);
             double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
-            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")))*epdUnitMult;
+            double gwpVal = (gwp == "") ? double.NaN : System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" "))) * epdUnitMult;
 
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
@@ -115,7 +115,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             string densityUnits = GetUnitsFromString(densityString);
             double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
-            double gwpVal = System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" ")))*epdUnitMult;
+            double gwpVal = (gwp == "") ? double.NaN : System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" "))) * epdUnitMult;
 
             SectorEnvironmentalProductDeclaration epd = new SectorEnvironmentalProductDeclaration
             {
