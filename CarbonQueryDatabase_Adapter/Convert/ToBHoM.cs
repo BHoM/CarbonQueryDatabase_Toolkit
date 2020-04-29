@@ -144,6 +144,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "y3":
                 case "yd³":
                 case "y³":
+                case "m3":
+                case "m³":
                     return QuantityType.Volume;
                 case "t":
                 case "short ton":
@@ -227,6 +229,8 @@ namespace BH.Adapter.CarbonQueryDatabase
             string numString = strings[0];
             double val = double.NaN;
             Double.TryParse(numString, out val);
+            if (val == 0)
+            { val = double.NaN; }
             return val;
         }
 
