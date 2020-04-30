@@ -213,10 +213,10 @@ namespace BH.Adapter.CarbonQueryDatabase
                     break;
                 case "in":
                 case "inches":
-                    return Engine.Units.Convert.FromInch(val);
+                    return val.FromInch();
                 case "ft":
                 case "feet":
-                    return Engine.Units.Convert.FromFeet(val);
+                    return val.FromFoot();
             }
             double valueSI = unitMult * val;
             if (valueSI == 0)
