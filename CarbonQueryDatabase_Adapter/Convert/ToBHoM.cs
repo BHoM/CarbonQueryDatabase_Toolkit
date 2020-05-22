@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
@@ -54,7 +55,9 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
             string epdUnit = GetUnitsFromString(declaredUnit);
-            double epdUnitMult = ConvertToSI(1, epdUnit);
+            double declaredVal = GetValFromString(declaredUnit);
+            QuantityType quantityType = GetQuantityTypeFromString(epdUnit);
+            double epdUnitMult = ConvertToSI(1/declaredVal, epdUnit);
 
             string densityString = obj.PropertyValue("density")?.ToString() ?? "";
             double densityVal = GetValFromString(densityString);
@@ -107,8 +110,9 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             string declaredUnit = obj.PropertyValue("declared_unit")?.ToString() ?? "";
             string epdUnit = GetUnitsFromString(declaredUnit);
+            double declaredVal = GetValFromString(declaredUnit);
             QuantityType quantityType = GetQuantityTypeFromString(epdUnit);
-            double epdUnitMult = ConvertToSI(1, epdUnit);
+            double epdUnitMult = ConvertToSI(1/declaredVal, epdUnit);
 
             string densityString = obj.PropertyValue("density_max")?.ToString() ?? "";
             double densityVal = GetValFromString(densityString);
@@ -163,6 +167,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "m2":
                 case "M2":
                 case "sq m":
+                case "m²":
                     return QuantityType.Area;
                 case "in":
                 case "inches":
@@ -178,24 +183,23 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         /***************************************************/
 
-        public static double ConvertToSI(double val, string unitFrom)
+        public static double ConvertToSI(double val, string unitTo)
         {
             double unitMult = 1;
-            switch (unitFrom)
+            switch (unitTo)
             {
                 case "kg/m3":
                 case "kg/m³":
                     unitMult = 1;
                     break;
                 case "lb/y3":
-                    unitMult = 0.593276;
+                    unitMult = 1.68555;
                     break;
                 case "yd3":
                 case "y3":
                 case "yd³":
                 case "y³":
-                    unitMult = 1.30795;
-                    break;
+                    return val.ToCubicYard();
                 case "t":
                 case "short ton":
                     unitMult = 0.000984207;
@@ -213,10 +217,10 @@ namespace BH.Adapter.CarbonQueryDatabase
                     break;
                 case "in":
                 case "inches":
-                    return val.FromInch();
+                    return val.ToInch();
                 case "ft":
                 case "feet":
-                    return val.FromFoot();
+                    return val.ToFoot();
             }
             double valueSI = unitMult * val;
             if (valueSI == 0)
@@ -228,8 +232,8 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         public static double GetValFromString(this string str)
         {
-            string[] strings = str.Split(' ');
-            string numString = strings[0];
+            Match match = Regex.Match(str, "[A-Za-z\\s]");
+            string numString = str.Substring(0, match.Index);
             double val = double.NaN;
             Double.TryParse(numString, out val);
             return val;
@@ -239,8 +243,8 @@ namespace BH.Adapter.CarbonQueryDatabase
 
         public static string GetUnitsFromString(this string str)
         {
-            string[] strings = str.Split(' ');
-            string units = (strings.Length > 1) ? strings[1] : "";
+            Match match = Regex.Match(str, "[A-Za-z]");
+            string units = str.Substring(match.Index);
             return units;
         }
 
