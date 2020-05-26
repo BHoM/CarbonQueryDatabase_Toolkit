@@ -32,6 +32,7 @@ using BH.oM.HTTP;
 using BH.Engine.HTTP;
 using BH.Engine.CarbonQueryDatabase;
 using BH.oM.LifeCycleAssessment;
+using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
