@@ -32,6 +32,7 @@ using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 using BH.oM.Base;
 using BH.oM.LifeCycleAssessment;
+using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Engine.Reflection;
 using System.Collections;
 using BH.Engine.CarbonQueryDatabase;

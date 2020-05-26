@@ -30,6 +30,7 @@ using BH.oM.Adapter;
 using BH.oM.Adapter.CarbonQueryDatabase;
 using BH.oM.HTTP;
 using BH.Engine.HTTP;
+using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Engine.CarbonQueryDatabase;
 using BH.oM.LifeCycleAssessment;
 using BH.Adapter;
