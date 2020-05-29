@@ -200,11 +200,11 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "yd³":
                 case "y³":
                     return val.ToCubicYard();
-                case "t":
                 case "short ton":
                     unitMult = 0.00110231;
                     break;
                 case "tonne":
+                case "t":
                 case "metric ton":
                     unitMult = 0.001;
                     break;
