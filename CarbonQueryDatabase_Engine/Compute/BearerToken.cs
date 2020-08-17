@@ -30,7 +30,7 @@ using System.Net.Http;
 using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 
-namespace BH.Engine.CarbonQueryDatabase
+namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Compute
     {
