@@ -23,11 +23,11 @@
 using BH.oM.Base;
 using System.Collections.Generic;
 using BH.oM.LifeCycleAssessment;
-using BH.oM.HTTP;
+using BH.oM.Adapters.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 
-namespace BH.Engine.CarbonQueryDatabase
+namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Create
     {
@@ -43,7 +43,7 @@ namespace BH.Engine.CarbonQueryDatabase
 
         public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CustomObject parameters = null)
         {
-            return new BH.oM.HTTP.GetRequest
+            return new BH.oM.Adapters.HTTP.GetRequest
             {
                 BaseUrl = "https://etl-api.cqd.io/api/" + apiCommand,
                 Headers = new Dictionary<string, object>()
