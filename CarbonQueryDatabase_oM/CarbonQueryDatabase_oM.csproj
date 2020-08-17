@@ -7,7 +7,7 @@
     <ProjectGuid>{0F693E7C-1A4E-42AD-A3D8-D6CE16ACAE5C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.oM.CarbonQueryDatabase</RootNamespace>
+    <RootNamespace>BH.oM.Adapters.CarbonQueryDatabase</RootNamespace>
     <AssemblyName>CarbonQueryDatabase_oM</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -7,7 +7,7 @@
     <ProjectGuid>{75BC936E-7B41-453E-A219-C0817EB35676}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.Engine.CarbonQueryDatabase</RootNamespace>
+    <RootNamespace>BH.Engine.Adapters.CarbonQueryDatabase</RootNamespace>
     <AssemblyName>CarbonQueryDatabase_Engine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
