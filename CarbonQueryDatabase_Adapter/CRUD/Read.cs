@@ -27,7 +27,7 @@ using System.Linq;
 using BH.Adapter.CarbonQueryDatabase;
 using BH.oM.Base;
 using BH.oM.Adapter;
-using BH.oM.Adapter.CarbonQueryDatabase;
+using BH.oM.Adapters.CarbonQueryDatabase;
 using BH.oM.Adapters.HTTP;
 using BH.Engine.Adapters.HTTP;
 using BH.Engine.Adapters.CarbonQueryDatabase;
