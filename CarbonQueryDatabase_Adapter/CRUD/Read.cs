@@ -101,9 +101,13 @@ namespace BH.Adapter.CarbonQueryDatabase
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
-            { epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams); }
+            {
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
+            }
             else
-            { epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken); }
+            {
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken);
+            }
 
             string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
@@ -182,9 +186,13 @@ namespace BH.Adapter.CarbonQueryDatabase
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
-            { epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams); }
+            {
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
+            }
             else
-            { epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken); }
+            {
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken);
+            }
 
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
