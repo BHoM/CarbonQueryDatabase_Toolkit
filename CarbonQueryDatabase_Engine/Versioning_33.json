@@ -1,11 +1,9 @@
 {
   "Namespace": {
     "ToNew": {
-      "BH.oM.CarbonQueryDatabase":  "BH.oM.Adapters.CarbonQueryDatabase",
 	  "BH.Engine.CarbonQueryDatabase":  "BH.Engine.Adapters.CarbonQueryDatabase"
     },
     "ToOld": {
-      "BH.oM.Adapters.CarbonQueryDatabase":  "BH.oM.CarbonQueryDatabase",
 	  "BH.Engine.Adapters.CarbonQueryDatabase":  "BH.Engine.CarbonQueryDatabase"
     }
   },
