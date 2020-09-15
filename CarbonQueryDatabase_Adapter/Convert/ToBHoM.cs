@@ -240,6 +240,8 @@ namespace BH.Adapter.CarbonQueryDatabase
             string numString = str.Substring(0, match.Index);
             double val = double.NaN;
             Double.TryParse(numString, out val);
+            if (numString == "")
+                { val = 1; }
             return val;
         }
 
