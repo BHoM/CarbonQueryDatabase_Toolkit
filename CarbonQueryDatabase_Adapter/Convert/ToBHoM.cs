@@ -77,7 +77,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
                 Density = density,
                 GlobalWarmingPotential = gwpVal,
-                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
+                BiogenicCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
                 IndustryStandards = standards != null  ? standards.ToList() : new List<string>(),
             };
@@ -129,7 +129,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
                 Density = density,
                 GlobalWarmingPotential = gwpVal,
-                BiogenicEmbodiedCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
+                BiogenicCarbon = obj.PropertyValue("biogenic_embodied_carbon") != null ? System.Convert.ToDouble(obj.PropertyValue("biogenic_embodied_carbon_z")) * epdUnitMult : double.NaN,
                 Description = obj.PropertyValue("description")?.ToString() ?? "",
                 Jurisdiction = jurisdictionNames,
                 Publisher = publisherNames,
