@@ -41,7 +41,7 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         [Input("parameters", "An optional CustomObject with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
 
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CustomObject parameters = null)
+        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken) //CustomObject parameters = null
         {
             return new BH.oM.Adapters.HTTP.GetRequest
             {
@@ -50,7 +50,7 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
                 {
                     { "Authorization", "Bearer " +  bearerToken }
                 },
-                Parameters = parameters?.CustomData
+                //Parameters = parameters?.CustomData
         };
         }
 
