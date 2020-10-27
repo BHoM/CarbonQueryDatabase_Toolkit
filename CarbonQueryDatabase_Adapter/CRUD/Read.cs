@@ -79,30 +79,13 @@ namespace BH.Adapter.CarbonQueryDatabase
                 count = config.Count;
                 name = config.NameLike;
                 plantName = config.PlantName;
-                
-                //id returns specific id and therefore supersedes other parameters
-                if (id == null)
-                {
-                    if (count != 0)
-                    {
-                        requestParams.CustomData.Add("page_size", count);
-                    }
-                    if (name != null)
-                    {
-                        requestParams.CustomData.Add("name__like", name);
-                    }
-                    if (plantName != null)
-                    {
-                        requestParams.CustomData.Add("plant__name__like", plantName);
-                    }
-                }
             }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken);
             }
             else
             {
@@ -168,26 +151,13 @@ namespace BH.Adapter.CarbonQueryDatabase
                 id = config.Id;
                 count = config.Count;
                 name = config.NameLike;
-
-                //id returns specific id and therefore supersedes other parameters
-                if (id == null)
-                {
-                    if (count != 0)
-                    {
-                        requestParams.CustomData.Add("page_size", count);
-                    }
-                    if (name != null)
-                    {
-                        requestParams.CustomData.Add("name__like", name);
-                    }
-                }
             }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken);
             }
             else
             {
