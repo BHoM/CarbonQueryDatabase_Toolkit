@@ -26,8 +26,6 @@ using BH.oM.LifeCycleAssessment;
 using BH.oM.Adapters.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
-
-using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
 using BH.oM.Adapters.CarbonQueryDatabase;
 
 namespace BH.Engine.Adapters.CarbonQueryDatabase
