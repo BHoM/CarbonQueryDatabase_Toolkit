@@ -36,6 +36,7 @@ using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
+using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
 
 namespace BH.Adapter.CarbonQueryDatabase
 {
@@ -72,6 +73,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             string name = null;
             string plantName = null;
             string id = null;
+            ReadRequest request = new ReadRequest();
 
             if (config != null)
             {
@@ -79,17 +81,29 @@ namespace BH.Adapter.CarbonQueryDatabase
                 count = config.Count;
                 name = config.NameLike;
                 plantName = config.PlantName;
+
+                if(id == null)
+                {
+                    if (count != 0)
+                        request.PageSize = count;
+
+                    if (name != null)
+                        request.NameLike = name;
+
+                    if (plantName != null)
+                        request.PlantNameLike = plantName;
+                }
             }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, request);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken, request);
             }
 
             string reqString = epdGetRequest.ToUrlString();
@@ -145,23 +159,33 @@ namespace BH.Adapter.CarbonQueryDatabase
             int count = 0;
             string name = null;
             string id = null;
+            ReadRequest request = new ReadRequest();
 
             if (config != null)
             {
                 id = config.Id;
                 count = config.Count;
                 name = config.NameLike;
+
+                if (id == null)
+                {
+                    if (count != 0)
+                        request.PageSize = count;
+
+                    if (name != null)
+                        request.NameLike = name;
+                }
             }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, request);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken, request);
             }
 
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
