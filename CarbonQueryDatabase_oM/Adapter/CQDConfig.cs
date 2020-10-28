@@ -39,7 +39,7 @@ namespace BH.oM.Adapters.CarbonQueryDatabase
         public virtual string Id { get; set; } = null;
 
         [Description("Sets maximum amount of items to return from CarbonQueryDatabase")]
-        public virtual int Count { get; set; } = 0;
+        public virtual int Count { get; set; } = 1;
 
         [Description("Specifies string to search and return objects for in CarbonQueryDatabase, ie RedBuilt RedLam LVL")]
         public virtual string NameLike { get; set; } = null;
