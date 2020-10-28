@@ -35,6 +35,8 @@ using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
+using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
+
 namespace BH.Adapter.CarbonQueryDatabase
 {
     public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
@@ -60,42 +62,16 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
         private List<EnvironmentalProductDeclaration> ReadEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
-            //Add parameters per config
-            CustomObject requestParams = new CustomObject();
-            int count = 0;
-            string name = null;
-            string plantName = null;
-            string id = null;
-            if (config != null)
-            {
-                id = config.Id;
-                count = config.Count;
-                name = config.NameLike;
-                plantName = config.PlantName;
-
-                //id returns specific id and therefore supersedes other parameters
-                if (id == null)
-                {
-                    if (count != 0)
-                    {
-                        requestParams.CustomData.Add("page_size", count);
-                    }
-                    if (name != null)
-                    {
-                        requestParams.CustomData.Add("name__like", name);
-                    }
-                    if (plantName != null)
-                    {
-                        requestParams.CustomData.Add("plant__name__like", plantName);
-                    }
-                }
-            }
+            int count = config.Count;
+            string name = config.NameLike;
+            string plantName = config.PlantName;
+            string id = config.Id;
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, config);
             }
             else
             {
@@ -141,36 +117,15 @@ namespace BH.Adapter.CarbonQueryDatabase
         /***************************************************/
         private List<SectorEnvironmentalProductDeclaration> ReadSectorEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
-            //Add parameters per config
-            CustomObject requestParams = new CustomObject();
-            int count = 0;
-            string name = null;
-            string id = null;
-            if (config != null)
-            {
-                id = config.Id;
-                count = config.Count;
-                name = config.NameLike;
-
-                //id returns specific id and therefore supersedes other parameters
-                if (id == null)
-                {
-                    if (count != 0)
-                    {
-                        requestParams.CustomData.Add("page_size", count);
-                    }
-                    if (name != null)
-                    {
-                        requestParams.CustomData.Add("name__like", name);
-                    }
-                }
-            }
+            int count = config.Count;
+            string name = config.NameLike;
+            string id = config.Id;
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, config);
             }
             else
             {

@@ -25,6 +25,9 @@ using BH.oM.LifeCycleAssessment;
 using BH.oM.Adapters.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
+using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
+using BH.oM.Adapters.CarbonQueryDatabase;
+
 namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Create
@@ -38,19 +41,22 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         [Input("parameters", "An optional CustomObject with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
 
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CustomObject parameters = null)
+        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CQDConfig parameters = null)
         {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("page_size", parameters.Count);
+            param.Add("name__like", parameters.NameLike);
+
             return new BH.oM.Adapters.HTTP.GetRequest
             {
                 BaseUrl = "https://etl-api.cqd.io/api/" + apiCommand,
                 Headers = new Dictionary<string, object>()
                 {
-                    { "Authorization", "Bearer " +  bearerToken }
+                    { "Authorization", "Bearer " + bearerToken }
                 },
-                Parameters = parameters?.CustomData
+                Parameters = param
             };
         }
-
         /***************************************************/
     }
 }
