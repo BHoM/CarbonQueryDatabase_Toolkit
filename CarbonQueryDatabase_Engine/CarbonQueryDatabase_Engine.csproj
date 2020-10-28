@@ -73,6 +73,12 @@
     <Folder Include="Modify\" />
     <Folder Include="Query\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarbonQueryDatabase_oM\CarbonQueryDatabase_oM.csproj">
+      <Project>{0f693e7c-1a4e-42ad-a3d8-d6ce16acae5c}</Project>
+      <Name>CarbonQueryDatabase_oM</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y

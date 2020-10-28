@@ -27,6 +27,8 @@ using BH.oM.Adapters.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 
+using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
+
 namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Create
@@ -40,15 +42,21 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         [Input("bearerToken", "The CarbonQueryDatabase bearerToken (this can be acquired using Compute BearerToken with your EC3 username and password)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
 
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken)
+        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, ReadRequest request)
         {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("page_size", request.PageSize);
+            param.Add("name__like", request.NameLike);
+            param.Add("plant__name__like", request.PlantNameLike);
+
             return new BH.oM.Adapters.HTTP.GetRequest
             {
                 BaseUrl = "https://etl-api.cqd.io/api/" + apiCommand,
                 Headers = new Dictionary<string, object>()
                 {
                     { "Authorization", "Bearer " +  bearerToken }
-                }
+                },
+                Parameters = param
             };
         }
         /***************************************************/
