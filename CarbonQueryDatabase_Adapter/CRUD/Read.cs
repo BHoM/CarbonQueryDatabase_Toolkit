@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +35,6 @@ using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
-
 namespace BH.Adapter.CarbonQueryDatabase
 {
     public partial class CarbonQueryDatabaseAdapter : BHoMAdapter
@@ -48,41 +46,61 @@ namespace BH.Adapter.CarbonQueryDatabase
         {
             dynamic elems = null;
             CQDConfig config = null;
-
             if (actionConfig is CQDConfig)
                 config = actionConfig as CQDConfig;
-
             //Choose what to pull out depending on the type.
             if (type == typeof(EnvironmentalProductDeclaration))
                 elems = ReadEnvironmentalProductDeclaration(ids as dynamic, config);
             else if (type == typeof(SectorEnvironmentalProductDeclaration))
                 elems = ReadSectorEnvironmentalProductDeclaration(ids as dynamic, config);
-
             return elems;
         }
-
         /***************************************************/
         /**** Private specific read methods             ****/
         /***************************************************/
         private List<EnvironmentalProductDeclaration> ReadEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
+            CustomObject requestParams = new CustomObject();
+            int count = 0;
+            string name = null;
+            string plantName = null;
             string id = null;
-
             if (config != null)
+            {
                 id = config.Id;
+                count = config.Count;
+                name = config.NameLike;
+                plantName = config.PlantName;
+
+                //id returns specific id and therefore supersedes other parameters
+                if (id == null)
+                {
+                    if (count != 0)
+                    {
+                        requestParams.CustomData.Add("page_size", count);
+                    }
+                    if (name != null)
+                    {
+                        requestParams.CustomData.Add("name__like", name);
+                    }
+                    if (plantName != null)
+                    {
+                        requestParams.CustomData.Add("plant__name__like", plantName);
+                    }
+                }
+            }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, requestParams);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken);
             }
-
             string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
@@ -91,9 +109,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
                 return null;
             }
+            //Check if the response is a valid json
             else if (response.StartsWith("{"))
             {
-                //Check if the response is a valid json
                 response = "[" + response + "]";
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
             }
@@ -106,12 +124,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
                 return null;
             }
-
             //Convert nested customObject from serialization to list of epdData objects
             List<EnvironmentalProductDeclaration> epdDataFromRequest = new List<EnvironmentalProductDeclaration>();
-
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
-
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
             {
@@ -121,31 +136,46 @@ namespace BH.Adapter.CarbonQueryDatabase
                     epdDataFromRequest.Add(epdData);
                 }
             }
-
             return epdDataFromRequest;
         }
-
         /***************************************************/
-
         private List<SectorEnvironmentalProductDeclaration> ReadSectorEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
         {
             //Add parameters per config
+            CustomObject requestParams = new CustomObject();
+            int count = 0;
+            string name = null;
             string id = null;
-
             if (config != null)
+            {
                 id = config.Id;
+                count = config.Count;
+                name = config.NameLike;
+
+                //id returns specific id and therefore supersedes other parameters
+                if (id == null)
+                {
+                    if (count != 0)
+                    {
+                        requestParams.CustomData.Add("page_size", count);
+                    }
+                    if (name != null)
+                    {
+                        requestParams.CustomData.Add("name__like", name);
+                    }
+                }
+            }
 
             //Create GET Request
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, requestParams);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken);
             }
-
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
             if (response == null)
@@ -153,9 +183,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
                 return null;
             }
+            //Check if the response is a valid json
             else if (response.StartsWith("{"))
             {
-                //Check if the response is a valid json
                 response = "[" + response + "]";
                 responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
             }
@@ -168,10 +198,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
                 return null;
             }
-
             //Convert nested customObject from serialization to list of epdData objects
             List<SectorEnvironmentalProductDeclaration> epdDataFromRequest = new List<SectorEnvironmentalProductDeclaration>();
-
             object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
@@ -182,12 +210,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                     epdDataFromRequest.Add(epdData);
                 }
             }
-
             return epdDataFromRequest;
         }
-
         /***************************************************/
-
     }
-
 }
