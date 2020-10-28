@@ -47,7 +47,6 @@ namespace BH.Adapter.CarbonQueryDatabase
         [Output("adapter", "Adapter results")]
         public CarbonQueryDatabaseAdapter(string username = "", string password = "", bool active = false)
         {
-            AdapterIdName = "CarbonQueryDatabaseAdapter";
             if (active)
             {
                 m_bearerToken = Compute.CQDBearerToken(username, password);
