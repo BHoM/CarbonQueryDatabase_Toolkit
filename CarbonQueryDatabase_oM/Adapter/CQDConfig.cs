@@ -47,6 +47,8 @@ namespace BH.oM.Adapters.CarbonQueryDatabase
         [Description("Specifies plant name to search and return objects for in CarbonQueryDatabase, ie Dupont")]
         public virtual string PlantName { get; set; } = null;
 
+        public virtual int PageSize { get; set; } = 1;
+
         /***************************************************/
     }
 }
