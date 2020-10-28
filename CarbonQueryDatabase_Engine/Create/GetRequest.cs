@@ -19,15 +19,12 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.oM.Base;
 using System.Collections.Generic;
 using BH.oM.LifeCycleAssessment;
 using BH.oM.Adapters.HTTP;
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
-using BH.oM.Adapters.CarbonQueryDatabase;
-
 namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Create
@@ -35,23 +32,14 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         /***************************************************/
         /**** Public  Method                            ****/
         /***************************************************/
-
         [Description("Create a GetRequest for the CarbonQueryDatabase")]
         [Input("apiCommand", "The CarbonQueryDatabase REST API command to create a GetRequest with")]
         [Input("bearerToken", "The CarbonQueryDatabase bearerToken (this can be acquired using Compute BearerToken with your EC3 username and password)")]
+        [Input("parameters", "An optional CustomObject with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
 
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CQDConfig config = null)
+        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CustomObject parameters = null)
         {
-            Dictionary<string, object> param = new Dictionary<string, object>();
-
-            if(config != null && config.Id == null)
-            {
-                param.Add("page_size", config.PageSize);
-                param.Add("name__like", config.NameLike);
-                param.Add("plant__name__like", config.PlantName);
-            }
-
             return new BH.oM.Adapters.HTTP.GetRequest
             {
                 BaseUrl = "https://etl-api.cqd.io/api/" + apiCommand,
@@ -59,10 +47,10 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
                 {
                     { "Authorization", "Bearer " +  bearerToken }
                 },
-                Parameters = param
+                Parameters = parameters?.CustomData
             };
         }
+
         /***************************************************/
     }
 }
-
