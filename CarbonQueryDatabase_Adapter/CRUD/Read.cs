@@ -35,7 +35,6 @@ using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
 using BH.Engine.Reflection;
-using BH.oM.Adapters.CarbonQueryDatabase.Fragments;
 
 namespace BH.Adapter.CarbonQueryDatabase
 {
