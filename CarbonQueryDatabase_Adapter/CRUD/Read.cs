@@ -129,7 +129,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken, config);
             }
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
