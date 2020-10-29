@@ -44,8 +44,11 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CQDConfig parameters = null)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
-            param.Add("page_size", parameters.Count);
-            param.Add("name__like", parameters.NameLike);
+            if(parameters.Count > 0)
+                param.Add("page_size", parameters.Count);
+
+            if(parameters.NameLike != null && parameters.NameLike != "")
+                param.Add("name__like", parameters.NameLike);
 
             return new BH.oM.Adapters.HTTP.GetRequest
             {
