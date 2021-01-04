@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -148,10 +148,10 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 case "yd3":
                 case "y3":
-                case "yd³":
-                case "y³":
+                case "ydï¿½":
+                case "yï¿½":
                 case "m3":
-                case "m³":
+                case "mï¿½":
                     return QuantityType.Volume;
                 case "t":
                 case "short ton":
@@ -168,7 +168,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "m2":
                 case "M2":
                 case "sq m":
-                case "m²":
+                case "mï¿½":
                     return QuantityType.Area;
                 case "in":
                 case "inches":
@@ -190,7 +190,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             switch (unitTo)
             {
                 case "kg/m3":
-                case "kg/m³":
+                case "kg/mï¿½":
                     unitMult = 1;
                     break;
                 case "lb/y3":
@@ -198,8 +198,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                     break;
                 case "yd3":
                 case "y3":
-                case "yd³":
-                case "y³":
+                case "ydï¿½":
+                case "yï¿½":
                     return val.ToCubicYard();
                 case "short ton":
                     unitMult = 0.00110231;
@@ -256,3 +256,4 @@ namespace BH.Adapter.CarbonQueryDatabase
 
     }
 }
+
