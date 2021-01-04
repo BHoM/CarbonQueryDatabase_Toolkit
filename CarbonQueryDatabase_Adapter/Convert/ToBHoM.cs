@@ -148,10 +148,10 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 case "yd3":
                 case "y3":
-                case "yd�":
-                case "y�":
+                case "yd³":
+                case "y³":
                 case "m3":
-                case "m�":
+                case "m³":
                     return QuantityType.Volume;
                 case "t":
                 case "short ton":
@@ -168,7 +168,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 case "m2":
                 case "M2":
                 case "sq m":
-                case "m�":
+                case "m²":
                     return QuantityType.Area;
                 case "in":
                 case "inches":
@@ -190,7 +190,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             switch (unitTo)
             {
                 case "kg/m3":
-                case "kg/m�":
+                case "kg/m³":
                     unitMult = 1;
                     break;
                 case "lb/y3":
@@ -198,8 +198,8 @@ namespace BH.Adapter.CarbonQueryDatabase
                     break;
                 case "yd3":
                 case "y3":
-                case "yd�":
-                case "y�":
+                case "yd³":
+                case "y³":
                     return val.ToCubicYard();
                 case "short ton":
                     unitMult = 0.00110231;
