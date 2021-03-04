@@ -88,11 +88,11 @@ namespace BH.Adapter.CarbonQueryDatabase
             else if (response.StartsWith("{"))
             {
                 response = "[" + response + "]";
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
             }
             else if (response.StartsWith("["))
             {
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
             }
             else
             {
@@ -101,7 +101,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
             //Convert nested customObject from serialization to list of epdData objects
             List<EnvironmentalProductDeclaration> epdDataFromRequest = new List<EnvironmentalProductDeclaration>();
-            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
+            object epdObjects = responseObjs[0];
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
             {
@@ -141,11 +141,11 @@ namespace BH.Adapter.CarbonQueryDatabase
             else if (response.StartsWith("{"))
             {
                 response = "[" + response + "]";
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
             }
             else if (response.StartsWith("["))
             {
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJson(response) };
+                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
             }
             else
             {
@@ -154,7 +154,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
             //Convert nested customObject from serialization to list of epdData objects
             List<SectorEnvironmentalProductDeclaration> epdDataFromRequest = new List<SectorEnvironmentalProductDeclaration>();
-            object epdObjects = Engine.Reflection.Query.PropertyValue(responseObjs[0], "Objects");
+            object epdObjects = responseObjs[0];
             IEnumerable objList = epdObjects as IEnumerable;
             if (objList != null)
             {
