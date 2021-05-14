@@ -44,6 +44,10 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BHoM_Engine, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BuildingEnvironments_Toolkit\Build\BHoM_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Data_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Data_oM.dll</HintPath>
       <Private>False</Private>
@@ -59,6 +63,10 @@
     <Reference Include="LifeCycleAssessment_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\LifeCycleAssessment_oM.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Physical_oM, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BuildingEnvironments_Toolkit\Build\Physical_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>

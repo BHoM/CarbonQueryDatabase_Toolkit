@@ -47,13 +47,13 @@ namespace BH.Adapter.CarbonQueryDatabase
         {
             dynamic elems = null;
             CQDConfig config = null;
+
             if (actionConfig is CQDConfig)
                 config = actionConfig as CQDConfig;
-            //Choose what to pull out depending on the type.
+
             if (type == typeof(EnvironmentalProductDeclaration))
                 elems = ReadEnvironmentalProductDeclaration(ids as dynamic, config);
-            else if (type == typeof(SectorEnvironmentalProductDeclaration))
-                elems = ReadSectorEnvironmentalProductDeclaration(ids as dynamic, config);
+
             return elems;
         }
         /***************************************************/
@@ -76,9 +76,11 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken, config);
             }
+
             string reqString = epdGetRequest.ToUrlString();
             string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
             List<object> responseObjs = null;
+
             if (response == null)
             {
                 BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
@@ -99,6 +101,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
                 return null;
             }
+
             //Convert nested customObject from serialization to list of epdData objects
             List<EnvironmentalProductDeclaration> epdDataFromRequest = new List<EnvironmentalProductDeclaration>();
             object epdObjects = responseObjs[0];
@@ -107,65 +110,13 @@ namespace BH.Adapter.CarbonQueryDatabase
             {
                 foreach (CustomObject co in objList)
                 {
-                    EnvironmentalProductDeclaration epdData = Adapter.CarbonQueryDatabase.Convert.ToEnvironmentalProductDeclaration(co);
+                    EnvironmentalProductDeclaration epdData = Adapter.CarbonQueryDatabase.Convert.ToEnvironmentalProductDeclaration(co, config);
                     epdDataFromRequest.Add(epdData);
                 }
             }
             return epdDataFromRequest;
         }
-        /***************************************************/
-        private List<SectorEnvironmentalProductDeclaration> ReadSectorEnvironmentalProductDeclaration(List<string> ids = null, CQDConfig config = null)
-        {
-            int count = config.Count;
-            string name = config.NameLike;
-            string id = config.Id;
 
-            //Create GET Request
-            GetRequest epdGetRequest;
-            if (id == null)
-            {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds", m_bearerToken, config);
-            }
-            else
-            {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("industry_epds" + id, m_bearerToken, config);
-            }
-            string response = BH.Engine.Adapters.HTTP.Compute.MakeRequest(epdGetRequest);
-            List<object> responseObjs = null;
-            if (response == null)
-            {
-                BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
-                return null;
-            }
-            //Check if the response is a valid json
-            else if (response.StartsWith("{"))
-            {
-                response = "[" + response + "]";
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
-            }
-            else if (response.StartsWith("["))
-            {
-                responseObjs = new List<object>() { Engine.Serialiser.Convert.FromJsonArray(response) };
-            }
-            else
-            {
-                BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
-                return null;
-            }
-            //Convert nested customObject from serialization to list of epdData objects
-            List<SectorEnvironmentalProductDeclaration> epdDataFromRequest = new List<SectorEnvironmentalProductDeclaration>();
-            object epdObjects = responseObjs[0];
-            IEnumerable objList = epdObjects as IEnumerable;
-            if (objList != null)
-            {
-                foreach (CustomObject co in objList)
-                {
-                    SectorEnvironmentalProductDeclaration epdData = Adapter.CarbonQueryDatabase.Convert.ToSectorEnvironmentalProductDeclaration(co);
-                    epdDataFromRequest.Add(epdData);
-                }
-            }
-            return epdDataFromRequest;
-        }
         /***************************************************/
     }
 }
