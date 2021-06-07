@@ -23,7 +23,6 @@
 using BH.oM.Adapter;
 using System.Collections.Generic;
 using System.ComponentModel;
-using BH.oM.LifeCycleAssessment;
 
 namespace BH.oM.Adapters.CarbonQueryDatabase
 {
@@ -35,9 +34,6 @@ namespace BH.oM.Adapters.CarbonQueryDatabase
         /***************************************************/
         /**** Public Properties                         ****/
         /***************************************************/
-
-        [Description("The Type of Environmental Product Declaration")]
-        public virtual EPDType Type { get; set; } = EPDType.Product;
 
         [Description("Specifies ID to search and return objects for in CarbonQueryDatabase. If this is specified it supersedes other input parameters.")]
         public virtual string Id { get; set; } = null;
