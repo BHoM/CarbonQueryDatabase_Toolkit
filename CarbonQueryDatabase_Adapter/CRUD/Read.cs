@@ -19,6 +19,7 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ using BH.oM.LifeCycleAssessment;
 using BH.oM.LifeCycleAssessment.MaterialFragments;
 using BH.Adapter;
 using BH.Engine.Serialiser;
-using BH.Engine.Reflection;
+using BH.Engine.Base;
 
 namespace BH.Adapter.CarbonQueryDatabase
 {
@@ -83,7 +84,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             if (response == null)
             {
-                BH.Engine.Reflection.Compute.RecordWarning("No response received, check bearer token and connection.");
+                BH.Engine.Base.Compute.RecordWarning("No response received, check bearer token and connection.");
                 return null;
             }
             //Check if the response is a valid json
@@ -98,7 +99,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             }
             else
             {
-                BH.Engine.Reflection.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
+                BH.Engine.Base.Compute.RecordWarning("Response is not a valid JSON. How'd that happen?");
                 return null;
             }
 

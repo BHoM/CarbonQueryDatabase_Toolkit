@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using System.ComponentModel;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
@@ -68,13 +68,13 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
                     return responseAuthString.Split('"')[3];
                 else
                 {
-                    BH.Engine.Reflection.Compute.RecordError("We did not receive the response we expected. The response was '" + responseAuthString + "'");
+                    BH.Engine.Base.Compute.RecordError("We did not receive the response we expected. The response was '" + responseAuthString + "'");
                     return null;
                 }
             }
             else
             {
-                BH.Engine.Reflection.Compute.RecordError("Request failed with code '" + response.StatusCode.ToString() + "'. Please check credentials and try again.");
+                BH.Engine.Base.Compute.RecordError("Request failed with code '" + response.StatusCode.ToString() + "'. Please check credentials and try again.");
                 return null;
             }
         }
