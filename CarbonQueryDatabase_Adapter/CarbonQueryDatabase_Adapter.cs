@@ -30,7 +30,7 @@ using BH.Adapter;
 using System.Net;
 using System.Net.Http;
 using System.ComponentModel;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using BH.Engine.Adapters.CarbonQueryDatabase;
 
 namespace BH.Adapter.CarbonQueryDatabase
