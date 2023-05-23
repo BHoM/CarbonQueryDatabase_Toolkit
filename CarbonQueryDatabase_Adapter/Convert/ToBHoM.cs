@@ -87,12 +87,9 @@ namespace BH.Adapter.CarbonQueryDatabase
                 jurisdictionNames = jurisdictionNames.Trim();
             }
 
-            EnvironmentalMetric metric = new EnvironmentalMetric
-            {
-                Field = EnvironmentalProductDeclarationField.GlobalWarmingPotential,
-                Phases = new List<LifeCycleAssessmentPhases>() { LifeCycleAssessmentPhases.A1, LifeCycleAssessmentPhases.A2, LifeCycleAssessmentPhases.A3},
-                Quantity = gwpVal,
-            };
+            double nan = double.NaN;
+
+            ClimateChangeTotalMetric metric = new ClimateChangeTotalMetric(nan, nan, nan, gwpVal, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan);
 
             AdditionalEPDData data = new AdditionalEPDData
             {
@@ -117,9 +114,8 @@ namespace BH.Adapter.CarbonQueryDatabase
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
                 Type = config.Type,
-                EnvironmentalMetric = new List<EnvironmentalMetric> { metric }, 
+                EnvironmentalMetrics = new List<EnvironmentalMetric> { metric }, 
                 QuantityType = quantityType,
-                QuantityTypeValue = 1,
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
             };
 
