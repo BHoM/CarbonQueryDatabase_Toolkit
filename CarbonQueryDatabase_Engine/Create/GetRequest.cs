@@ -34,12 +34,14 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         /***************************************************/
         /**** Public  Method                            ****/
         /***************************************************/
+
+        [PreviousVersion("6.2", "BH.Engine.Adapters.CarbonQueryDatabase.CarbonQuery(string username = \"\", string password = \"\"), BH.oM.Adapters.CarbonQueryDatabase.CQDConfig parameters = null")]
         [Description("Create a GetRequest for the CarbonQueryDatabase")]
-        [Input("apiCommand", "The CarbonQueryDatabase REST API command to create a GetRequest with")]
-        [Input("bearerToken", "The CarbonQueryDatabase bearerToken (this can be acquired using Compute BearerToken with your EC3 username and password)")]
+        [Input("apiCommand", "The CarbonQueryDatabase API command to create a GetRequest with")]
+        [Input("apiToken", "The user's CarbonQueryDatabase APIToken")]
         [Input("parameters", "An optional config object with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string bearerToken, CQDConfig parameters = null)
+        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string apiToken, CQDConfig parameters = null)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
             if(parameters.Count > 0)
@@ -50,10 +52,10 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
 
             return new BH.oM.Adapters.HTTP.GetRequest
             {
-                BaseUrl = "https://etl-api.cqd.io/api/" + apiCommand,
+                BaseUrl = "https://buildingtransparency.org/api/" + apiCommand,
                 Headers = new Dictionary<string, object>()
                 {
-                    { "Authorization", "Bearer " + bearerToken }
+                    { "Authorization", "Bearer " + apiToken }
                 },
                 Parameters = param
             };

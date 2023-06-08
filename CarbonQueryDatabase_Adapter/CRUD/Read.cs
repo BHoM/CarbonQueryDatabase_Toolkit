@@ -71,11 +71,11 @@ namespace BH.Adapter.CarbonQueryDatabase
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_apiToken, config);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_bearerToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_apiToken, config);
             }
 
             string reqString = epdGetRequest.ToUrlString();
@@ -84,7 +84,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             if (response == null)
             {
-                BH.Engine.Base.Compute.RecordWarning("No response received, check bearer token and connection.");
+                BH.Engine.Base.Compute.RecordWarning("No response received, API token and connection.");
                 return null;
             }
             //Check if the response is a valid json
