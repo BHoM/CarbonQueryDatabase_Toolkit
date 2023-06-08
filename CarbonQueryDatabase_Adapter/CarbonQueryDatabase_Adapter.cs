@@ -41,7 +41,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         /**** Constructors                              ****/
         /***************************************************/
 
-        [PreviousVersion("6.2", "BH.Adapter.CarbonQueryDatabase(string username = \"\", string password = \"\", bool active = false)")]
+        [PreviousVersion("6.2", "BH.Adapter.CarbonQueryDatabase(System.String, System.String, System.Bool)")]
         [Description("Adapter to connect to CarbonQueryDatabase.")]
         [Input("apiToken", "Provide EC3 API Token")]
         [Output("adapter", "Adapter results")]

@@ -34,7 +34,7 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Compute
     {
-        [PreviousVersion("6.2", "BH.Engine.Adapters.CarbonQueryDatabase.CQDBearerToken(string username = \"\", string password = \"\")")]
+        [PreviousVersion("6.2", "BH.Engine.Adapters.CarbonQueryDatabase.CQDBearerToken(System.String, System.String)")]
         [Description("Returns a temporary, session-based APItoken for the CarbonQueryDatabase system from the provided username and password")]
         [Input("username", "Your username for the system")]
         [Input("password", "Your password for the system - case sensitive, do not share scripts with this saved")]
