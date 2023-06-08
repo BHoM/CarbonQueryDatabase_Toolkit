@@ -35,7 +35,6 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         /**** Public  Method                            ****/
         /***************************************************/
 
-        [PreviousVersion("6.2", "BH.Engine.Adapters.CarbonQueryDatabase.CarbonQuery(string username = \"\", string password = \"\"), BH.oM.Adapters.CarbonQueryDatabase.CQDConfig parameters = null")]
         [Description("Create a GetRequest for the CarbonQueryDatabase")]
         [Input("apiCommand", "The CarbonQueryDatabase API command to create a GetRequest with")]
         [Input("apiToken", "The user's CarbonQueryDatabase APIToken")]
