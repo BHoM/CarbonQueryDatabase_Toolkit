@@ -41,15 +41,15 @@ namespace BH.Adapter.CarbonQueryDatabase
         /**** Constructors                              ****/
         /***************************************************/
 
+        [PreviousVersion("6.2", "BH.Adapter.CarbonQueryDatabase(string username = \"\", string password = \"\", bool active = false)")]
         [Description("Adapter to connect to CarbonQueryDatabase.")]
-        [Input("username", "Provide EC3 Username")]
-        [Input("password", "Provide EC3 Password")]
+        [Input("apiToken", "Provide EC3 API Token")]
         [Output("adapter", "Adapter results")]
-        public CarbonQueryDatabaseAdapter(string username = "", string password = "", bool active = false)
+        public CarbonQueryDatabaseAdapter(string apiToken = "", bool active = false)
         {
             if (active)
             {
-                m_bearerToken = Compute.CQDBearerToken(username, password);
+                m_apiToken = apiToken;
             }
         }
 
@@ -57,7 +57,7 @@ namespace BH.Adapter.CarbonQueryDatabase
         /*** Private Fields                              ***/
         /***************************************************/
 
-        private static string m_bearerToken = null;
+        private static string m_apiToken = null;
 
     }
 }

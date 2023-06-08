@@ -34,15 +34,16 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
 {
     public static partial class Compute
     {
-        [Description("Returns a bearer token for the CarbonQueryDatabase system from the provided username and password")]
+        [PreviousVersion("6.2", "BH.Engine.Adapters.CarbonQueryDatabase.CQDBearerToken(string username = \"\", string password = \"\")")]
+        [Description("Returns a temporary, session-based APItoken for the CarbonQueryDatabase system from the provided username and password")]
         [Input("username", "Your username for the system")]
         [Input("password", "Your password for the system - case sensitive, do not share scripts with this saved")]
-        [Output("bearerToken", "The bearer token to use the database system or the full response string if there was an error")]
-        public static string CQDBearerToken(string username, string password)
+        [Output("APIToken", "The bearer token to use the database system or the full response string if there was an error")]
+        public static string APIToken(string username, string password)
         {
-            string apiAddress = "https://etl-api.cqd.io/api/rest-auth/login";
-                
-                System.Net.ServicePointManager.SecurityProtocol =
+            string apiAddress = "https://buildingtransparency.org/api/rest-auth/login";
+
+            System.Net.ServicePointManager.SecurityProtocol =
                 SecurityProtocolType.Ssl3 |
                 SecurityProtocolType.Tls12 |
                 SecurityProtocolType.Tls11 |
@@ -53,7 +54,7 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
             //Add headers per api auth requirements
             client.DefaultRequestHeaders.Add("accept", "application/json");
 
-            //Post login auth request and return token to m_bearerKey
+            //Post login auth request and return token to m_APIToken
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, apiAddress);
 
             string loginString = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
