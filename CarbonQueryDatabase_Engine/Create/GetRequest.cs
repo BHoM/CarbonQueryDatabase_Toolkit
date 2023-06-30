@@ -40,7 +40,7 @@ namespace BH.Engine.Adapters.CarbonQueryDatabase
         [Input("apiToken", "The user's CarbonQueryDatabase APIToken")]
         [Input("parameters", "An optional config object with properties representing parameters to create the GetRequest with (ie count, name_like, etc)")]
         [Output("GetRequest", "A GetRequest with CarbonQueryDatabase specific headers and uri")]
-        public static GetRequest CarbonQueryDatabaseRequest(string apiCommand, string apiToken, CQDConfig parameters = null)
+        public static GetRequest GetRequest(string apiCommand, string apiToken, CQDConfig parameters = null)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
             if(parameters.Count > 0)
