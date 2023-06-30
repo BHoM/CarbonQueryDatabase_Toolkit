@@ -71,11 +71,11 @@ namespace BH.Adapter.CarbonQueryDatabase
             GetRequest epdGetRequest;
             if (id == null)
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.GetRequest("epds", m_apiToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds", m_apiToken, config);
             }
             else
             {
-                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.GetRequest("epds/" + id, m_apiToken, config);
+                epdGetRequest = BH.Engine.Adapters.CarbonQueryDatabase.Create.CarbonQueryDatabaseRequest("epds/" + id, m_apiToken, config);
             }
 
             string reqString = epdGetRequest.ToUrlString();
