@@ -62,7 +62,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             double density = ConvertToSI(densityVal, densityUnits);
             string gwp = obj.PropertyValue("gwp")?.ToString() ?? "";
             double gwpVal = (gwp == "") ? double.NaN : System.Convert.ToDouble(gwp.Substring(0, gwp.IndexOf(" "))) * epdUnitMult;
-            // lifespan = (int)(obj.PropertyValue("reference_service_life") ?? 0);
+            int lifespan = int.TryParse(obj.PropertyValue("reference_service_life")?.ToString() ?? "", out result) ? result : 0;
             int referenceYear = int.TryParse(obj.PropertyValue("date_of_issue")?.ToString() ?? "", out result) ? result : 0;
 
             string publisherNames = "";
@@ -98,7 +98,7 @@ namespace BH.Adapter.CarbonQueryDatabase
                 Id = obj.PropertyValue("id")?.ToString() ?? "",
                 IndustryStandards = standards != null ? standards.ToList() : new List<string>(),
                 Jurisdiction = jurisdictionNames,
-                //LifeSpan = lifespan,
+                LifeSpan = lifespan,
                 Manufacturer = obj.PropertyValue("manufacturer.name")?.ToString() ?? "",
                 PlantName = obj.PropertyValue("plant.name")?.ToString() ?? "",
                 PostalCode = int.TryParse(obj.PropertyValue("plant.postal_code")?.ToString() ?? "", out result) ? result : 0,
