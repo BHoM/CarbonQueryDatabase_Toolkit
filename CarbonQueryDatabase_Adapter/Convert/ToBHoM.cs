@@ -89,7 +89,7 @@ namespace BH.Adapter.CarbonQueryDatabase
 
             double nan = double.NaN;
 
-            ClimateChangeTotalMetric metric = new ClimateChangeTotalMetric(nan, nan, nan, gwpVal, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan);
+            ClimateChangeTotalMetric metric = new ClimateChangeTotalMetric { Indicators = new Dictionary<Module, double> { { Module.A1toA3, gwpVal } } };
 
             AdditionalEPDData data = new AdditionalEPDData
             {
@@ -114,7 +114,7 @@ namespace BH.Adapter.CarbonQueryDatabase
             EnvironmentalProductDeclaration epd = new EnvironmentalProductDeclaration
             {
                 Type = config.Type,
-                EnvironmentalMetrics = new List<EnvironmentalMetric> { metric }, 
+                EnvironmentalMetrics = new List<IEnvironmentalMetric> { metric }, 
                 QuantityType = quantityType,
                 Name = obj.PropertyValue("name")?.ToString() ?? "",
             };
