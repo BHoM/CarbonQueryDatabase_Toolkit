@@ -87,8 +87,6 @@ namespace BH.Adapter.CarbonQueryDatabase
                 jurisdictionNames = jurisdictionNames.Trim();
             }
 
-            double nan = double.NaN;
-
             ClimateChangeTotalMetric metric = new ClimateChangeTotalMetric { Indicators = new Dictionary<Module, double> { { Module.A1toA3, gwpVal } } };
 
             AdditionalEPDData data = new AdditionalEPDData
